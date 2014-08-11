@@ -12,7 +12,8 @@
 	<p class="alert"><%= alert %></p>
 
 	<nav>
-		<ul class="navLinks">
+		<ul id="navLinks">
+			<li><%= link_to 'Home', root_path %></li>
 			<%= render 'devise/menu/registration_items' %>
 			<%= render 'devise/menu/login_items' %>
 		</ul>

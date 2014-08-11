@@ -1,5 +1,25 @@
 $main-font: 'Arial', sans-serif;
 
+/****************** GENERAL *****************/
 html, body {
 	font-family: $main-font;
+	margin: 10px;
+	padding: 0;
 }
+/********************************************/
+
+
+/**************** NAVIGATION ****************/
+nav {
+	background-color: #ccc;
+	width: 100%;
+	text-align: center;
+	#navLinks {
+		margin: 0 auto;
+		li {
+			display: inline-block;
+			margin: 20px;
+		}
+	}
+}
+/********************************************/
