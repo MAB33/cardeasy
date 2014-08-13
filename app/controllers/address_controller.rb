@@ -22,6 +22,7 @@ class AddressController < ApplicationController
 	  	@address.user = User.find(current_user.id)
 	  	
 	  	if @address.save
+	  		# if the checkbox for primary address is checked, save the address_id on the user
 	  		if params[:primary_address] == "1"
 	  			@address.user.update(address_id: @address.id)
 	  		end
