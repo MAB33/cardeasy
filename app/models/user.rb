@@ -4,4 +4,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :addresses, :dependent => :destroy
+
+  before_save :capitalize_name
+
+	def capitalize_name
+		self.fname = self.fname.capitalize
+		self.lname = self.lname.capitalize
+	end
+
 end

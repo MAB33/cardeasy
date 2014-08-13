@@ -30,6 +30,10 @@ gem 'devise'
 
 gem 'lob'
 
+gem 'country_select'
+
+gem 'validates_as_postal_code'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -11,7 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811185437) do
+ActiveRecord::Schema.define(version: 20140813175214) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "lob_id"
+    t.string   "user_id"
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.string   "address_city"
+    t.string   "address_state"
+    t.string   "address_zip"
+    t.string   "address_country"
+    t.string   "date_created"
+    t.string   "date_modified"
+    t.string   "object"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -28,6 +47,7 @@ ActiveRecord::Schema.define(version: 20140811185437) do
     t.string   "lname"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "address_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
