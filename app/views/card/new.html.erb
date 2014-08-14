@@ -1,0 +1,28 @@
+<div class="units-row units-padding">
+    <div class="unit-100">
+        <h3>Create a New Card: Step 1</h3>
+		<% if @card.errors.full_messages.any? %>
+			<ul>
+				<% @card.errors.full_messages.each do |error_message| %>
+				<li><%= error_message %></li> <br />
+				<% end %>
+			<ul>
+		<% end %>
+		<%= form_for [@user, @card], url: user_card_index_path do |f| %>
+			<h4><%= f.label "Give this Card a name" %></h4>
+			<%= f.text_field :name %><br><br>
+			<h4>Choose a Template</h4>
+			<% @card_templates.each do |template| %>
+				<div class="units-row units-padding">
+					<div class="unit-25">
+						<%= "<img class='templateThumb' src='#{template.thumb_path}'>".html_safe %>
+						<%= f.radio_button :card_template_id, template.id %> 
+						<%= label :template_choice, template.name %>
+					</div>
+				</div>
+			<% end %>
+			<br><br>
+			<%= f.submit 'Create Card' %>
+		<% end %>
+    </div>
+</div>

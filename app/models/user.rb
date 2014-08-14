@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :addresses, :dependent => :destroy
+  has_many :cards, :dependent => :destroy
 
   before_save :capitalize_name
 

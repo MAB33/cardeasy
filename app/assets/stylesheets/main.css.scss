@@ -1,10 +1,9 @@
-$main-font: 'Arial', sans-serif;
+// $main-font: 'Arial', sans-serif;
 
 /****************** GENERAL *****************/
 html, body {
-	font-family: $main-font;
-	margin: 10px;
-	padding: 0;
+	// font-family: $main-font;
+	// padding: 0;
 }
 /********************************************/
 
@@ -21,5 +20,14 @@ nav {
 			margin: 20px;
 		}
 	}
+}
+/********************************************/
+
+
+/****************** CARDS *******************/
+.templateThumb {
+	width: 200px;
+	display:block;
+	padding: 10px 0;
 }
 /********************************************/

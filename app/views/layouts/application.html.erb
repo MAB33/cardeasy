@@ -5,11 +5,20 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
 
-	<p class="notice"><%= notice %></p>
-	<p class="alert"><%= alert %></p>
+	<% if notice %>
+    <div class="flashMessages" id="flashNotice" >
+      <h4><%= notice %> | <span class="dismissFlash">x</span></h4>
+    </div>
+  <% end %>
+  <% if alert %>
+    <div class="flashMessages" id="flashAlert">
+      <h4><%= alert %> | <span class="dismissFlash">x</span></h4>
+    </div>
+  <% end %>
 
 	<nav>
 		<ul id="navLinks">

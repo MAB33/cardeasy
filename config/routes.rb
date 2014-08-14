@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :users do
   	resources :address
+  	resources :card
   end
 
   get 'home' => 'home#index'

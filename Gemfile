@@ -34,6 +34,8 @@ gem 'country_select'
 
 gem 'validates_as_postal_code'
 
+gem 'prawn'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

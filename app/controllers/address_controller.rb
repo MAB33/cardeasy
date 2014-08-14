@@ -18,7 +18,7 @@ class AddressController < ApplicationController
 	def create
 		@user = User.find(current_user.id)
 		@address = Address.new(address_params)
-		@address.address_country = "US"
+		@address.country = "US"
 	  	@address.user = User.find(current_user.id)
 	  	
 	  	if @address.save
@@ -64,8 +64,9 @@ class AddressController < ApplicationController
 
 	private
 
+
 	def address_params
-		params.require(:address).permit(:lob_id, :name, :email, :phone, :address_line1, :address_line2, :address_city, :address_state, :address_zip, :address_country, :date_created, :date_modified, :object)
+		params.require(:address).permit(:lob_id, :name, :email, :phone, :address_line1, :address_line2, :city, :state, :zip, :country, :date_created, :date_modified, :object)
 	end
 
 	def set_address

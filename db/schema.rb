@@ -11,23 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813203233) do
+ActiveRecord::Schema.define(version: 20140814123511) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
-    t.string   "user_id"
+    t.integer  "user_id",       limit: 255
     t.string   "name"
     t.string   "email"
     t.string   "phone"
     t.string   "address_line1"
     t.string   "address_line2"
-    t.string   "address_city"
-    t.string   "address_state"
-    t.string   "address_zip"
-    t.string   "address_country"
-    t.string   "date_created"
-    t.string   "date_modified"
+    t.string   "city"
     t.string   "object"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+  end
+
+  create_table "card_templates", force: true do |t|
+    t.string   "template_path"
+    t.string   "thumb_path"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,15 +41,23 @@ ActiveRecord::Schema.define(version: 20140813203233) do
   create_table "cards", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.string   "file"
+    t.string   "setting_id"
+    t.integer  "quantity",         limit: 255
+    t.string   "double_sided"
+    t.string   "full_bleed"
+    t.integer  "user_id",          limit: 255
+    t.integer  "card_template_id"
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                              default: "", null: false
+    t.string   "encrypted_password",                 default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -52,7 +66,7 @@ ActiveRecord::Schema.define(version: 20140813203233) do
     t.string   "lname"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "address_id"
+    t.integer  "address_id",             limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
