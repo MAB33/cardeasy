@@ -12,25 +12,45 @@ class CardController < ApplicationController
 		@card_templates = CardTemplate.all
 	end
 
+	def generate_user_card
+		### Generates the PDF to be sent to Lob API for print
+		@card_templates = CardTemplate.all
+		Prawn::Document.generate("public/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
+			pdf.image "public/card_templates/#{@card_templates.find_by(id: @card.card_template_id).template_path}", :position => :center, :width => 738, :height => 522
+			pdf.start_new_page
+			pdf.font("Times-Roman", :size => 18) do
+				pdf.text_box "#{@card.message}",
+				:at => [414, 477],
+				:height => 432, :width => 279,
+				:valign => :center,
+				:overflow => :shrink_to_fit,
+				:min_font_size => 10,
+				:disable_wrap_by_char => true
+			end
+		end
+		### Updates the Card file attribute to the newly generated PDF
+		@card.update(file: "/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf")
+	end
+
 	def create
 		@user = User.find(current_user.id)
 		@card = Card.new(card_params)
 		@card_templates = CardTemplate.all
-		# @card.setting_id = "203"
-		# @card.double_sided = "1"
 	  	@card.user = User.find(current_user.id)
 	  	
 	  	if @card.save
-	      flash[:notice] = "The card has been added to your collection!"
-	      redirect_to user_card_index_path(current_user)
+	  		generate_user_card
+			flash[:notice] = "The card has been added to your collection!"
+			redirect_to user_card_path(current_user.id, @card)
 	    else 
-	      flash[:alert] = "There was a problem creating the card. Please try again."
-	      render :new
+			flash[:alert] = "There was a problem creating the card. Please try again."
+			render :new
 	    end
 
 	end
 
 	def show
+		@card_templates = CardTemplate.all
 	end
 
 	def edit
@@ -38,10 +58,9 @@ class CardController < ApplicationController
 	end
 
 	def update
-		puts "******************#{params.inspect}"
       if @card.update(card_params)
         flash[:notice] = "The card has been updated."
-        redirect_to edit_user_card_path
+        redirect_to user_card_path(current_user.id, @card)
       else
         flash[:alert] = "There was a problem updating the card. Please try again."
         render :edit
@@ -59,82 +78,11 @@ class CardController < ApplicationController
 	end
 
 	
-	# def index
- #    @invoices = Invoice.all_invoices(current_customer)
-	# end
-
-	#   def show
-	#     @invoice = Invoice.find(params[:id])
-	#     respond_to do |format|
-	#       format.html
-	#       format.pdf do
-	#         pdf = InvoicePdf.new(@invoice, view_context)
-	#         send_data pdf.render, filename: 
-	#         "invoice_#{@invoice.created_at.strftime("%d/%m/%Y")}.pdf",
-	#         type: "application/pdf"
-	#       end
-	#     end
-	#   end
-	# end
-
-
-
-	# def index
-	# 	@cards = card.all
-	# end
-
- #  	def show
-
-	# end
-
-	# def new
-	# 	@card = card.new
-	# end
-
-	# def create
-	# 	@user = User.find(current_user.id)
-	# 	@card = Card.new(card_params)
-	# 	@card.card_country = "US"
-	#   	@card.user = User.find(current_user.id)
-	  	
-	#   	if @card.save
-	#       flash[:notice] = "The card has been added to your card Book!"
-	#       redirect_to user_card_index_path(current_user)
-	#     else 
-	#       flash[:alert] = "There was a problem adding the card. Please try again."
-	#       render :new
-	#     end
-
-	# end
-
-	# def edit
-
-	# end
-
-	# def update
- #      if @card.update(card_params)
- #        flash[:notice] = "The card has been updated."
- #        redirect_to user_card_index_path(current_user)
- #      else
- #        flash[:alert] = "There was a problem updating the card. Please try again."
- #        render :edit
- #      end
-	# end
-
-	# def destroy
- #      if @card.delete
- #        flash[:notice] = "The card has been deleted."
- #        redirect_to user_card_index_path(current_user)
- #      else
- #        flash[:alert] = "There was a problem deleting the card."
- #        redirect_to user_card_index_path(current_user)
- #      end
-	# end
 
 	private
 
 	def card_params
-		params.require(:card).permit(:name, :file, :quantity, :card_template_id)
+		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message)
 
 	end
 

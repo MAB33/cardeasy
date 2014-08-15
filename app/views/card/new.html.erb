@@ -15,13 +15,14 @@
 			<% @card_templates.each do |template| %>
 				<div class="units-row units-padding">
 					<div class="unit-25">
-						<%= "<img class='templateThumb' src='#{template.thumb_path}'>".html_safe %>
+						<%= "<img class='templateThumb' src='/card_templates/#{template.thumb_path}'>".html_safe %>
 						<%= f.radio_button :card_template_id, template.id %> 
 						<%= label :template_choice, template.name %>
 					</div>
 				</div>
 			<% end %>
-			<br><br>
+			<h4><%= f.label "Write Your Message" %></h4>
+			<%= f.text_area :message, class: "textArea" %><br><br>
 			<%= f.submit 'Create Card' %>
 		<% end %>
     </div>
