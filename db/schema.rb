@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814180146) do
+ActiveRecord::Schema.define(version: 20140815203510) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140814180146) do
     t.integer  "user_id",          limit: 255
     t.integer  "card_template_id"
     t.text     "message"
+    t.integer  "address_id"
   end
 
   create_table "users", force: true do |t|

@@ -12,7 +12,7 @@ class CardController < ApplicationController
 		@card_templates = CardTemplate.all
 	end
 
-	def generate_user_card
+	def generate_user_card_for_lob
 		### Generates the PDF to be sent to Lob API for print
 		@card_templates = CardTemplate.all
 		Prawn::Document.generate("public/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
@@ -39,7 +39,7 @@ class CardController < ApplicationController
 	  	@card.user = User.find(current_user.id)
 	  	
 	  	if @card.save
-	  		generate_user_card
+	  		generate_user_card_for_lob
 			flash[:notice] = "The card has been added to your collection!"
 			redirect_to user_card_path(current_user.id, @card)
 	    else 
@@ -58,7 +58,9 @@ class CardController < ApplicationController
 	end
 
 	def update
+		@card_templates = CardTemplate.all
       if @card.update(card_params)
+      	generate_user_card_for_lob
         flash[:notice] = "The card has been updated."
         redirect_to user_card_path(current_user.id, @card)
       else
@@ -82,7 +84,7 @@ class CardController < ApplicationController
 	private
 
 	def card_params
-		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message)
+		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message, :to_address_id)
 
 	end
 

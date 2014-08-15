@@ -7,12 +7,17 @@
 		<% else %>
 
 		<h3>My Address</h3>
+			<% if current_user.address_id.blank? %>
+				<p>You do not have a "From" address set up for yourself. In order, to send cards you must set one up <%= link_to "here", new_user_address_path %>.</p>
+			<% else %>
 			<ul>
-				<li><%= @addresses.find_by(id: current_user.address_id).name %><br>
-				<%= @addresses.find_by(id: current_user.address_id).address_line1 %><br>
-				<%= "#{@addresses.find_by(id: current_user.address_id).city}, #{@addresses.find_by(id: current_user.address_id).state} #{@addresses.find_by(id: current_user.address_id).zip}" %>
+				<li><%= user_primary_address.name %><br>
+				<%= user_primary_address.address_line1 %><br>
+				<%= user_primary_address.city %>, <%= user_primary_address.state %> <%= user_primary_address.zip %>
+				<%= link_to "Update", edit_user_address_path(user_id: current_user.id, id: user_primary_address.id) %>
 				</li>
 			</ul>
+			<% end %>
 		<h3>Saved Addresses</h3>
 		<% current_user.addresses.each do |address| %>
 			<ul>

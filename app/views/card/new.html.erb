@@ -21,8 +21,10 @@
 					</div>
 				</div>
 			<% end %>
-			<h4><%= f.label "Write Your Message" %></h4>
+			<h4><%= f.label "Write Your Message (300 word limit)" %></h4>
 			<%= f.text_area :message, class: "textArea" %><br><br>
+			<h4><%= f.label "Send this card to" %></h4>
+			<%# f.collection_select :to_address_id, current_user.addresses.order(:name), :id, :name, :prompt => "Select a Contact" %><br><br>
 			<%= f.submit 'Create Card' %>
 		<% end %>
     </div>

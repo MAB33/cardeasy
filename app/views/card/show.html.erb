@@ -1,8 +1,7 @@
 <div class="units-row units-padding">
     <div class="unit-100">
     	<h2>Review Card</h2>
-
-		<%= "<img class='templateThumb' src='/card_templates/#{@card_templates.find_by(id: @card.card_template_id).thumb_path}'>".html_safe %>
+		<%= "<img class='templateThumb' src='/card_templates/#{@card.card_template.thumb_path}'>".html_safe %>
 		<h5>Name:</h5>
 		<p><%= @card.name %></p>
 		<h5>Message:</h5>

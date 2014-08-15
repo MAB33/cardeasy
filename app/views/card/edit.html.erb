@@ -8,7 +8,7 @@
 			<ul>
 		<% end %>
         <h3>Update this Card: Step 1</h3>
-        <%= "<img class='templateThumb' src='/card_templates/#{@card_templates.find_by(id: @card.card_template_id).thumb_path}'>".html_safe %>
+        <%= "<img class='templateThumb' src='/card_templates/#{@card.card_template.thumb_path}'>".html_safe %>
 		<%= form_for [@user, @card], url: user_card_path do |f| %>
 			<h4><%= f.label "Update Card Name" %></h4>
 			<%= f.text_field :name %><br><br>
@@ -22,7 +22,7 @@
 					</div>
 				</div>
 			<% end %>
-			<h4><%= f.label "Update Your Message" %></h4>
+			<h4><%= f.label "Update Your Message (300 word limit)" %></h4>
 			<%= f.text_area :message, class: "textArea" %><br><br>
 			<%= f.submit 'Update Card' %>
 			<%= link_to("Delete Card", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete, class: "btn")%>

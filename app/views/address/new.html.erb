@@ -18,7 +18,7 @@
 		<%= f.label "City*" %><br>
 		<%= f.text_field :city %><br>
 		<%= f.label "State*" %><br>
-		<%= f.select :state, options_for_select(us_states), include_blank: true %><br>
+		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br>
 		<%= f.label "Zip Code*" %><br>
 		<%= f.text_field :zip %><br>
 		<%= label_tag "Make this my primary 'From' address" %>
