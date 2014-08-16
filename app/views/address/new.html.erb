@@ -1,5 +1,4 @@
 <div class="units-row units-padding">
-    <div class="unit-100">
         <h3>Add a Contact</h3>
         <h4>Address (US only)</h4>
 	<% if @address.errors.full_messages.any? %>
@@ -10,8 +9,10 @@
 		<ul>
 	<% end %>
 	<%= form_for [@user, @address], url: user_address_index_path do |f| %>
-		<%= f.label "Addressee's Full Name (as it would appear on envelope)*" %><br>
-		<%= f.text_field :name %><br>
+		<%= f.label "First Name*" %><br>
+		<%= f.text_field :fname %><br>
+		<%= f.label "Last Name*" %><br>
+		<%= f.text_field :lname %><br>
 		<%= f.label "Address Line 1*" %><br>
 		<%= f.text_field :address_line1 %><br>
 		<%= f.label "Address Line 2" %><br>
@@ -22,13 +23,12 @@
 		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br>
 		<%= f.label "Zip Code*" %><br>
 		<%= f.text_field :zip %><br>
-		<p style="margin-bottom:0;">Country:</p>
-		<p style="margin-bottom:0;">United States</p><br>
+		<p >Country:<br>
+		United States</p>
 		<%= check_box_tag :primary_address, value = "1", checked = false %>
 		<%= label_tag "Save this as my address (this will be used as the return address on your cards)" %><br><br>
 		<h4>Birthday</h4>
-		<%= date_select("address", "birthday", order: [:day, :month, :year], start_year: 1900, end_year: Date.current.year) %><br><br>
+		<%= f.date_select("birthday", order: [:day, :month, :year], start_year: 1900, end_year: Date.current.year) %><br><br>
 		<%= f.submit 'Add Address' %>
 	<% end %>
-    </div>
 </div>

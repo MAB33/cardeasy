@@ -1,16 +1,20 @@
 <div class="units-row units-padding">
-    <div class="unit-100">
     	<h2>Review Card</h2>
-		<%= "<img class='templateThumb' src='/card_templates/#{@card.card_template.thumb_path}'>".html_safe %>
+		<%= "<img class='templateThumb' style='width:280px;' src='/card_templates/#{@card.card_template.thumb_path}'>".html_safe %>
 		<h5>Name:</h5>
 		<p><%= @card.name %></p>
 		<h5>Message:</h5>
 		<p><%= @card.message %></p>
 		<h5>Send to:</h5>
-		
+		<% if @card.addresses.blank? %>
+			<p>You haven't added anyone to send this card to. <%= link_to "Add", edit_user_card_path(user_id: current_user.id, id: params[:id]) %> someone!</p>
+		<% else %>
+		<p><% @card.addresses.each do |address| %>
+			 <%=address.fname%> <%=address.lname%><br>
+		<% end %></p>
+		<%end%>
 		<p> <%= link_to "View PDF for Print", @card.file %> |
 		<%= link_to "Edit", edit_user_card_path(user_id: current_user.id, id: params[:id]) %> | 
 		<%= link_to("Delete", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete)%></p>
 		<h4><a class="btn" href="#">Order Card</a></h4>
-    </div>
 </div>

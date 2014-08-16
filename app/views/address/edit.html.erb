@@ -1,5 +1,4 @@
 <div class="units-row units-padding">
-    <div class="unit-100">
         <h3>Edit Address:</h3>
 	<% if @address.errors.full_messages.any? %>
 		<ul>
@@ -10,7 +9,7 @@
 	<% end %>
 	<%= form_for [@user, @address], url: user_address_path do |f| %>
 		<%= f.label "Addressee's Name (as it would appear on envelope)*" %><br>
-		<%= f.text_field :name %><br>
+		<%= f.text_field :fname %><br>
 		<%= f.label "Address Line 1*" %><br>
 		<%= f.text_field :address_line1 %><br>
 		<%= f.label "Address Line 2" %><br>
@@ -25,7 +24,6 @@
 		<%= check_box_tag :primary_address, value = "1", checked = false %><br>
 		<%= f.submit 'Update Address' %>
 	<% end %>
-    </div>
 </div>
 
 

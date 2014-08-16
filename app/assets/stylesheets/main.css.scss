@@ -5,6 +5,15 @@ html, body {
 	// font-family: $main-font;
 	// padding: 0;
 }
+.units-container {
+	padding: 30px;
+}
+ul li {
+	list-style-type:none;
+}
+.unit-33, .unit-25 {
+	text-align:center;
+}
 /********************************************/
 
 
@@ -26,8 +35,7 @@ nav {
 
 /****************** CARDS *******************/
 .templateThumb {
-	width: 200px;
-	display:block;
+	width: 100%;
 	padding: 10px 0;
 }
 .textArea {

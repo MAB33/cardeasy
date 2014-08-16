@@ -66,7 +66,7 @@ class AddressController < ApplicationController
 
 
 	def address_params
-		params.require(:address).permit(:lob_id, :name, :email, :phone, :address_line1, :address_line2, :city, :state, :zip, :country, :date_created, :date_modified, :object, "birthday(3i)", "birthday(2i)", "birthday(1i)")
+		params.require(:address).permit(:lob_id, :fname, :lname, :email, :phone, :address_line1, :address_line2, :city, :state, :zip, :country, :date_created, :date_modified, :object, "birthday(3i)", "birthday(2i)", "birthday(1i)")
 	end
 
 	def set_address

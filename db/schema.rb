@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140816141150) do
+ActiveRecord::Schema.define(version: 20140816184133) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
     t.integer  "user_id",       limit: 255
-    t.string   "name"
+    t.string   "fname"
     t.string   "email"
     t.string   "phone"
     t.string   "address_line1"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140816141150) do
     t.string   "zip"
     t.string   "country"
     t.date     "birthday"
+    t.string   "lname"
   end
 
   create_table "addresses_cards", id: false, force: true do |t|
@@ -56,7 +57,6 @@ ActiveRecord::Schema.define(version: 20140816141150) do
     t.integer  "user_id",          limit: 255
     t.integer  "card_template_id"
     t.text     "message"
-    t.integer  "address_id"
   end
 
   create_table "users", force: true do |t|

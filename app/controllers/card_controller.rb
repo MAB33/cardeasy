@@ -1,6 +1,6 @@
 class CardController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_card, only: [:show, :edit, :update, :destroy]
+	before_action :set_card, only: [:show, :edit, :update, :destroy, :generate_user_card_for_lob]
 
 	def index
 		@cards = Card.all
@@ -12,14 +12,37 @@ class CardController < ApplicationController
 		@card_templates = CardTemplate.all
 	end
 
+	# def generate_user_card_for_lob
+	# 	### Generates the PDF to be sent to Lob API for print
+	# 	@card_templates = CardTemplate.all
+	# 	Prawn::Document.generate("public/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
+	# 		pdf.image "public/card_templates/#{@card_templates.find_by(id: @card.card_template_id).template_path}", :position => :center, :width => 738, :height => 522
+	# 		pdf.start_new_page
+	# 		pdf.font("Times-Roman", :size => 18) do
+	# 			# pdf.text "#{@card.id}",
+	# 			pdf.text_box "#{@card.id} \n\n #{@card.message}",
+	# 			:at => [414, 477],
+	# 			:height => 432, :width => 279,
+	# 			:valign => :center,
+	# 			:overflow => :shrink_to_fit,
+	# 			:min_font_size => 10,
+	# 			:disable_wrap_by_char => true
+	# 		end
+	# 	end
+	# 	### Updates the Card file attribute to the newly generated PDF
+	# 	@card.update(file: "/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf")
+	# end
+
 	def generate_user_card_for_lob
 		### Generates the PDF to be sent to Lob API for print
 		@card_templates = CardTemplate.all
-		Prawn::Document.generate("public/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
-			pdf.image "public/card_templates/#{@card_templates.find_by(id: @card.card_template_id).template_path}", :position => :center, :width => 738, :height => 522
+
+		@card.addresses.each do |address|
+			Prawn::Document.generate("public/users_cards/User-#{@card.user_id}_Card-#{@card.id}_Address-#{address.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
+			pdf.image "public/card_templates/#{@card.card_template.template_path}", :position => :center, :width => 738, :height => 522
 			pdf.start_new_page
 			pdf.font("Times-Roman", :size => 18) do
-				pdf.text_box "#{@card.message}",
+				pdf.text_box "#{@card.id} \n\n #{@card.message}",
 				:at => [414, 477],
 				:height => 432, :width => 279,
 				:valign => :center,
@@ -28,6 +51,9 @@ class CardController < ApplicationController
 				:disable_wrap_by_char => true
 			end
 		end
+		end
+		
+		
 		### Updates the Card file attribute to the newly generated PDF
 		@card.update(file: "/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf")
 	end
@@ -65,6 +91,7 @@ class CardController < ApplicationController
 	end
 
 	def update
+		params[:card][:address_ids] ||= []
 		@card_templates = CardTemplate.all
       if @card.update(card_params)
       	generate_user_card_for_lob
@@ -91,7 +118,7 @@ class CardController < ApplicationController
 	private
 
 	def card_params
-		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message, :address_id => [])
+		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message, :address_ids => [])
 
 	end
 
