@@ -41,21 +41,20 @@ class CardController < ApplicationController
 			Prawn::Document.generate("public/users_cards/User-#{@card.user_id}_Card-#{@card.id}_Address-#{address.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
 			pdf.image "public/card_templates/#{@card.card_template.template_path}", :position => :center, :width => 738, :height => 522
 			pdf.start_new_page
-			pdf.font("Times-Roman", :size => 18) do
-				pdf.text_box "#{@card.id} \n\n #{@card.message}",
+			pdf.font("public/fonts/LaBelleAurore.ttf", :size => 16) do
+				pdf.text_box "Dear #{address.fname}, \n\n #{@card.message}",
+				:leading => -4,
 				:at => [414, 477],
 				:height => 432, :width => 279,
 				:valign => :center,
 				:overflow => :shrink_to_fit,
-				:min_font_size => 10,
+				:min_font_size => 9,
 				:disable_wrap_by_char => true
 			end
 		end
 		end
-		
-		
 		### Updates the Card file attribute to the newly generated PDF
-		@card.update(file: "/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf")
+		# @card.update(file: "/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf")
 	end
 
 	def create_addresses_orders
@@ -72,7 +71,7 @@ class CardController < ApplicationController
 		@card.quantity = "1"
 	  	
 	  	if @card.save
-	  		generate_user_card_for_lob
+	  		# generate_user_card_for_lob
 			flash[:notice] = "The card has been added to your collection!"
 			redirect_to user_card_path(current_user.id, @card)
 	    else 

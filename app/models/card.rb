@@ -5,7 +5,7 @@ class Card < ActiveRecord::Base
 
 	validates_presence_of :card_template_id, :name, :message
 	# validates_uniqueness_of :name
-	validates_length_of :message, :maximum => 2245, :message => "is too long"
+	validates_length_of :message, :maximum => 1600, :message => "is too long"
 
 
 	before_save :strip_whitespace
