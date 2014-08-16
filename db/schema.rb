@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815203510) do
+ActiveRecord::Schema.define(version: 20140815211906) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140815203510) do
     t.string   "state"
     t.string   "zip"
     t.string   "country"
+    t.date     "birthday"
   end
 
   create_table "card_templates", force: true do |t|

@@ -7,16 +7,9 @@ class Card < ActiveRecord::Base
 	validates_length_of :message, :maximum => 2245, :message => "is too long"
 
 
-	before_save :set_up_card_before_save, :strip_whitespace
+	before_save :strip_whitespace
 
 	private
-
-	def set_up_card_before_save
-		self.setting_id = "203"
-		self.double_sided = "1"
-		self.full_bleed = "1"
-		self.quantity = "1"
-	end
 
 	def strip_whitespace
 		self.name = self.name.strip unless self.name.blank?

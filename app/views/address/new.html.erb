@@ -1,6 +1,7 @@
 <div class="units-row units-padding">
     <div class="unit-100">
-        <h3>Add an address to your contacts (US only):</h3>
+        <h3>Add a Contact</h3>
+        <h4>Address (US only)</h4>
 	<% if @address.errors.full_messages.any? %>
 		<ul>
 			<% @address.errors.full_messages.each do |error_message| %>
@@ -21,8 +22,12 @@
 		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br>
 		<%= f.label "Zip Code*" %><br>
 		<%= f.text_field :zip %><br>
-		<%= label_tag "Make this my primary 'From' address" %>
-		<%= check_box_tag :primary_address, value = "1", checked = false %><br>
+		<p style="margin-bottom:0;">Country:</p>
+		<p style="margin-bottom:0;">United States</p><br>
+		<%= check_box_tag :primary_address, value = "1", checked = false %>
+		<%= label_tag "Save this as my address (this will be used as the return address on your cards)" %><br><br>
+		<h4>Birthday</h4>
+		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br>
 		<%= f.submit 'Add Address' %>
 	<% end %>
     </div>
