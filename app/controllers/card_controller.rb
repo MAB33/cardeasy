@@ -32,6 +32,9 @@ class CardController < ApplicationController
 		@card.update(file: "/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf")
 	end
 
+	def create_addresses_orders
+	end
+
 	def create
 		@user = User.find(current_user.id)
 		@card = Card.new(card_params)
@@ -88,7 +91,7 @@ class CardController < ApplicationController
 	private
 
 	def card_params
-		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message, :address_id)
+		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message, :address_id => [])
 
 	end
 

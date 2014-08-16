@@ -24,8 +24,8 @@
 			<% end %>
 			<h4><%= f.label "Update Your Message (300 word limit)" %></h4>
 			<%= f.text_area :message, class: "textArea" %><br><br>
-			<h4><%= f.label "Send this card to" %></h4>
-			<%= f.collection_select :address_id, current_user.addresses.order(:name), :id, :name, :prompt => "Select from Contacts" %><br><br>
+			<!-- <h4><%# f.label "Send this card to" %></h4>
+			<%# f.collection_select :address_id, current_user.addresses.order(:name), :id, :name, :prompt => "Select from Contacts" %><br><br> -->
 			<%= f.submit 'Update Card' %>
 			<%= link_to("Delete Card", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete, class: "btn")%>
 		<% end %>

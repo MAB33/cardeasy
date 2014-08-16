@@ -1,7 +1,8 @@
 class Card < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :card_template
-	belongs_to :address
+	has_and_belongs_to_many :addresses
+	has_many :addresses_cards, dependent: :destroy
 
 	validates_presence_of :card_template_id, :name, :message
 	# validates_uniqueness_of :name

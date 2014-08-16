@@ -7,8 +7,7 @@
 		<h5>Message:</h5>
 		<p><%= @card.message %></p>
 		<h5>Send to:</h5>
-		<p><%= @card.address.name %><br>
-		<%= @card.address.address_line1 %>...</p>
+		
 		<p> <%= link_to "View PDF for Print", @card.file %> |
 		<%= link_to "Edit", edit_user_card_path(user_id: current_user.id, id: params[:id]) %> | 
 		<%= link_to("Delete", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete)%></p>

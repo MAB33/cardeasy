@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815211906) do
+ActiveRecord::Schema.define(version: 20140816141150) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
@@ -29,6 +29,11 @@ ActiveRecord::Schema.define(version: 20140815211906) do
     t.string   "zip"
     t.string   "country"
     t.date     "birthday"
+  end
+
+  create_table "addresses_cards", id: false, force: true do |t|
+    t.integer "address_id", null: false
+    t.integer "card_id",    null: false
   end
 
   create_table "card_templates", force: true do |t|

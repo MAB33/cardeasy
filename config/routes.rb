@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   
   root 'home#index'
 
+  post 'create_addresses_orders' => 'card#create_addresses_orders'
+  get 'create_addresses_orders' => 'card#create_addresses_orders'
+
 end
