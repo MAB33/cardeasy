@@ -1,6 +1,7 @@
 class Card < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :card_template
+	belongs_to :address
 
 	validates_presence_of :card_template_id, :name, :message
 	# validates_uniqueness_of :name

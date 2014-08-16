@@ -27,7 +27,7 @@
 		<%= check_box_tag :primary_address, value = "1", checked = false %>
 		<%= label_tag "Save this as my address (this will be used as the return address on your cards)" %><br><br>
 		<h4>Birthday</h4>
-		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br>
+		<%= date_select("address", "birthday", order: [:day, :month, :year], start_year: 1900, end_year: Date.current.year) %><br><br>
 		<%= f.submit 'Add Address' %>
 	<% end %>
     </div>

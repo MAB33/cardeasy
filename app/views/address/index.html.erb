@@ -11,22 +11,21 @@
 				<p>You do not have a "From" address set up for yourself. In order, to send cards you must set one up <%= link_to "here", new_user_address_path %>.</p>
 			<% else %>
 			<ul>
-				<li><%= user_primary_address.name %><br>
-				<%= user_primary_address.address_line1 %><br>
-				<%= user_primary_address.city %>, <%= user_primary_address.state %> <%= user_primary_address.zip %>
+				<li><b><%= user_primary_address.name %></b><br>
+				<%= "#{user_primary_address.address_line1}, #{user_primary_address.city}, #{user_primary_address.state} #{user_primary_address.zip}" %><br>
 				<%= link_to "Update", edit_user_address_path(user_id: current_user.id, id: user_primary_address.id) %>
 				</li>
 			</ul>
 			<% end %>
-		<h3>Saved Addresses</h3>
+		<h3>Saved Contacts</h3>
 		<% current_user.addresses.each do |address| %>
 			<ul>
 				<% if address.id == current_user.address_id %>	
 				<% else %>
 					<li>
-						<%= address.name %><br>
-						<%= address.address_line1 %><br>
-						<%= "#{address.city}, #{address.state} #{address.zip}" %><br>
+						<b><%= address.name %></b><br>
+						<b>Birthday:</b> <%= address.birthday.to_s('birthday') %><br>
+						<b>Address:</b> <%= "#{address.address_line1}, #{address.city}, #{address.state} #{address.zip}" %><br>
 						<%= link_to "Edit", edit_user_address_path(user_id: current_user.id, id: address.id) %> | 
 						<%= link_to("Delete", user_address_path(user_id: current_user.id, id: address.id), method: :delete)%>
 					</li>

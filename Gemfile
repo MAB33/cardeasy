@@ -43,7 +43,7 @@ gem 'validates_as_postal_code'
 
 gem 'prawn'
 
-gem 'prawn-templates'
+gem 'birthday', '~> 0.3.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

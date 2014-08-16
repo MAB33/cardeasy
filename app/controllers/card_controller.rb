@@ -88,7 +88,7 @@ class CardController < ApplicationController
 	private
 
 	def card_params
-		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message, :to_address_id)
+		params.require(:card).permit(:name, :file, :quantity, :card_template_id, :message, :address_id)
 
 	end
 
