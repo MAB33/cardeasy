@@ -51,17 +51,16 @@ class OrdersController < ApplicationController
 	end
 
 	def checkout
-		generate_user_card_for_lob
-	end	
-
-	def generate_user_card_for_lob
-		### Generates the PDF to be sent to Lob API for print
-		@card_templates = CardTemplate.all
-		@user = User.find(current_user.id)
-
 		current_order.cards.each do |card|
 			card.addresses.each do |address|
-			Prawn::Document.generate("public/users_cards/User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
+				generate_user_card_for_lob(card, address)
+				cardling = Cardling.create(file: "User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}_Bday-#{address.birthday}.pdf", card_id: card.id, order_id: current_order.id, delivery_date: (address.birthday - 10), status: "queued")
+			end
+		end
+	end
+
+	def generate_user_card_for_lob(card, address)
+		Prawn::Document.generate("public/users_cards/User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}_Bday-#{address.birthday}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
 			pdf.image "public/card_templates/#{card.card_template.template_path}", :position => :center, :width => 738, :height => 522
 			pdf.start_new_page
 			pdf.font("public/fonts/LaBelleAurore.ttf", :size => 16) do
@@ -75,9 +74,36 @@ class OrdersController < ApplicationController
 				:disable_wrap_by_char => true
 			end
 		end
-		end
-		end
 	end
+
+
+
+
+
+	# def generate_user_card_for_lob
+	# 	### Generates the PDF to be sent to Lob API for print
+	# 	@card_templates = CardTemplate.all
+	# 	@user = User.find(current_user.id)
+
+	# 	current_order.cards.each do |card|
+	# 		card.addresses.each do |address|
+	# 		Prawn::Document.generate("public/users_cards/User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
+	# 		pdf.image "public/card_templates/#{card.card_template.template_path}", :position => :center, :width => 738, :height => 522
+	# 		pdf.start_new_page
+	# 		pdf.font("public/fonts/LaBelleAurore.ttf", :size => 16) do
+	# 			pdf.text_box "Dear #{address.fname}, \n\n #{card.message}",
+	# 			:leading => -4,
+	# 			:at => [414, 477],
+	# 			:height => 432, :width => 279,
+	# 			:valign => :center,
+	# 			:overflow => :shrink_to_fit,
+	# 			:min_font_size => 9,
+	# 			:disable_wrap_by_char => true
+	# 		end
+	# 	end
+	# 	end
+	# 	end
+	# end
 
 	private
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140817185911) do
+ActiveRecord::Schema.define(version: 20140817221748) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
@@ -52,6 +52,9 @@ ActiveRecord::Schema.define(version: 20140817185911) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order_id"
+    t.integer  "address_id"
+    t.string   "status"
+    t.date     "delivery_date"
   end
 
   add_index "cardlings", ["card_id"], name: "index_cardlings_on_card_id"
