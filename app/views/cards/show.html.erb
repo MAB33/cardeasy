@@ -1,0 +1,38 @@
+<div class="units-row units-padding">
+    	<h2>Review Card</h2>
+		<%= "<img class='templateThumb' style='width:280px;' src='/card_templates/#{@card.card_template.thumb_path}'>".html_safe %>
+		<h5>Name:</h5>
+		<p><%= @card.name %></p>
+		<h5>Message:</h5>
+		<p><%= @card.message %></p>
+		<h5>Send to (<%= @card.addresses.count %>) Contacts:</h5>
+		<% if @card.addresses.blank? %>
+			<p>You need to choose at least one contact to send this card to before you can add it to your cart. <%= link_to "Add someone!", edit_user_card_path(user_id: current_user.id, id: params[:id]) %></p>
+		<% else %>
+		<p><% @card.addresses.each do |address| %>
+			<%=address.fname%> <%=address.lname%><br>
+		<% end %></p>
+		<%end%>
+		<h5>Price per Card:</h5>
+		<p><%= print_price(@card.price) %></p>
+		<h5>Total Price:</h5>
+		<p><%= print_price(@card.addresses.count*@card.price) %></p>
+		<p><%= link_to "Edit", edit_user_card_path(user_id: current_user.id, id: params[:id]) %> | 
+		<%= link_to("Delete", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete)%>
+
+		<% if @card.status == "ordered" %>
+			<p>This card has been ordered. <%= link_to "View my cart.", user_order_path(user_id: current_user.id, id: current_order.id)%></p>
+		<% elsif @card.status == "in cart" %>
+			| <%= link_to "Remove from Cart", remove_from_cart_path(card_id: @card.id), method: :post %></p>
+			<p>This card is in cart. <%= link_to "View my cart.", user_order_path(user_id: current_user.id, id: current_order.id)%></p>
+		<% else %>
+		<% if @card.addresses.blank? %>
+		<% else %>
+			<%= form_tag add_to_cart_path, method: 'post' do %>
+				<%= hidden_field_tag :card_id, @card.id %>
+				<%= submit_tag "Add to Cart" %>
+			<% end %>
+		<% end %>
+		<% end %>
+		
+</div>

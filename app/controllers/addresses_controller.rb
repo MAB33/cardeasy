@@ -1,4 +1,4 @@
-class AddressController < ApplicationController
+class AddressesController < ApplicationController
 
 	before_action :authenticate_user!
 	before_action :set_address, only: [:show, :edit, :update, :destroy]
@@ -27,7 +27,7 @@ class AddressController < ApplicationController
 	  			@address.user.update(address_id: @address.id)
 	  		end
 	      flash[:notice] = "The address has been added to your Address Book!"
-	      redirect_to user_address_index_path(current_user)
+	      redirect_to user_addresses_path(current_user)
 	    else 
 	      flash[:alert] = "There was a problem adding the address. Please try again."
 	      render :new
@@ -45,7 +45,7 @@ class AddressController < ApplicationController
   			@address.user.update(address_id: @address.id)
   		end
         flash[:notice] = "The address has been updated."
-        redirect_to user_address_index_path(current_user)
+        redirect_to user_addresses_path(current_user)
       else
         flash[:alert] = "There was a problem updating the address. Please try again."
         render :edit
@@ -55,10 +55,10 @@ class AddressController < ApplicationController
 	def destroy
       if @address.delete
         flash[:notice] = "The address has been deleted."
-        redirect_to user_address_index_path(current_user)
+        redirect_to user_addresses_path(current_user)
       else
         flash[:alert] = "There was a problem deleting the address."
-        redirect_to user_address_index_path(current_user)
+        redirect_to user_addresses_path(current_user)
       end
 	end
 

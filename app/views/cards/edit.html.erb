@@ -23,12 +23,16 @@
 	<h4><%= f.label "Write Your Message (300 word limit)" %></h4>
 	<%= f.text_area :message, class: "textArea" %><br><br>
 	<h4><%= f.label "Send this card to" %></h4>
+	<% if current_user.addresses.blank? %>
+			<p>You have no saved contacts. Add some <%= link_to "here", new_user_address_path %>.</p>
+		<% else %>
 	<% current_user.addresses.each do |address| %>
       <%= check_box_tag "card[address_ids][]", address.id, @card.addresses.include?(address)%>
       <%=address.fname%> <%=address.lname%> <br>
-    <%end%><br>  
+    <%end%>
+    <% end %><br>
 	<%= f.submit 'Update Card' %>
-	<%= link_to("Delete Card", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete, class: "btn")%>
+	<%= link_to "Delete Card", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete, class: "btn" %>
 <% end %>
 </div>
 

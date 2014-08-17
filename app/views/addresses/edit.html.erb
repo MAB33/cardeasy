@@ -8,8 +8,10 @@
 		<ul>
 	<% end %>
 	<%= form_for [@user, @address], url: user_address_path do |f| %>
-		<%= f.label "Addressee's Name (as it would appear on envelope)*" %><br>
+		<%= f.label "First Name*" %><br>
 		<%= f.text_field :fname %><br>
+		<%= f.label "Last Name*" %><br>
+		<%= f.text_field :lname %><br>
 		<%= f.label "Address Line 1*" %><br>
 		<%= f.text_field :address_line1 %><br>
 		<%= f.label "Address Line 2" %><br>
@@ -17,11 +19,15 @@
 		<%= f.label "City*" %><br>
 		<%= f.text_field :city %><br>
 		<%= f.label "State*" %><br>
-		<%= f.select :state, options_for_select(us_states, @address.state), :prompt => "Select a Contact" %><br>
+		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br>
 		<%= f.label "Zip Code*" %><br>
 		<%= f.text_field :zip %><br>
-		<%= label_tag "Make this my primary 'From' address" %>
-		<%= check_box_tag :primary_address, value = "1", checked = false %><br>
+		<p >Country:<br>
+		United States</p>
+		<%= check_box_tag :primary_address, value = "1", checked = false %>
+		<%= label_tag "Save this as my address (this will be used as the return address on your cards)" %><br><br>
+		<h4>Birthday</h4>
+		<%= f.date_select("birthday", order: [:day, :month, :year], start_year: 1900, end_year: Date.current.year) %><br><br>
 		<%= f.submit 'Update Address' %>
 	<% end %>
 </div>

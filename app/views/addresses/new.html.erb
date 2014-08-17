@@ -8,7 +8,7 @@
 			<% end %>
 		<ul>
 	<% end %>
-	<%= form_for [@user, @address], url: user_address_index_path do |f| %>
+	<%= form_for [@user, @address], url: user_addresses_path do |f| %>
 		<%= f.label "First Name*" %><br>
 		<%= f.text_field :fname %><br>
 		<%= f.label "Last Name*" %><br>

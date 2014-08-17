@@ -1,12 +1,11 @@
 <% if user_signed_in? %>
-  <li>
-  <%= link_to('My Profile', edit_user_registration_path) %>
-  </li>
-  <li>
-  <%= link_to "My Cards", user_card_index_path(current_user) %>
-  </li>
+  <li><%= link_to('My Profile', edit_user_registration_path) %></li>
+  <li><%= link_to "My Cards", user_cards_path(current_user) %></li>
+  <% if current_order %>
+  <li><%= link_to "Cart (#{current_order.cards.count})", user_order_path(user_id: current_user.id, id: current_order.id) %></li>
+  <% else %>
+  	<li>Cart (0)</li>
+  <% end %>
 <% else %>
-  <li>
-  <%= link_to('Sign Up', new_user_registration_path)  %>
-  </li>
+  <li><%= link_to('Sign Up', new_user_registration_path)  %></li>
 <% end %>

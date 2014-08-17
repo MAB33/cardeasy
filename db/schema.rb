@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140816184133) do
+ActiveRecord::Schema.define(version: 20140817185911) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
@@ -45,6 +45,17 @@ ActiveRecord::Schema.define(version: 20140816184133) do
     t.datetime "updated_at"
   end
 
+  create_table "cardlings", force: true do |t|
+    t.integer  "card_id"
+    t.string   "file"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "order_id"
+  end
+
+  add_index "cardlings", ["card_id"], name: "index_cardlings_on_card_id"
+
   create_table "cards", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -57,6 +68,16 @@ ActiveRecord::Schema.define(version: 20140816184133) do
     t.integer  "user_id",          limit: 255
     t.integer  "card_template_id"
     t.text     "message"
+    t.integer  "order_id"
+    t.string   "status"
+    t.decimal  "price",                        precision: 8, scale: 2
+  end
+
+  create_table "orders", force: true do |t|
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "users", force: true do |t|

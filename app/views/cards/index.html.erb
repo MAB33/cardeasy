@@ -1,0 +1,28 @@
+<div class="units-row units-padding">
+    <h2><%= current_user.fname %>'s Card Collection</h2>
+	<% if current_user.cards.blank? %>
+		<p>You haven't create any cards yet. Add some <%= link_to "here", new_user_card_path(current_user) %>.</p>
+	<% else %>
+
+
+	<div class="units-row units-padding">
+		<% current_user.cards.each do |card| %>
+
+			<% if card.status == "ordered" %>
+			<% else %>
+				<div class="unit-25">
+					<h4><%= card.name %></h4>
+					<%= "<img class='templateThumb' src='/card_templates/#{card.card_template.thumb_path}'>".html_safe %>
+					<p><% if card.status == "in cart" %>
+						In Cart |
+					<% end %>
+						<%= link_to "View", user_card_path(user_id: current_user.id, id: card.id) %> |
+					<%= link_to "Edit", edit_user_card_path(user_id: current_user.id, id: card.id) %> | 
+					<%= link_to("Delete", user_card_path(user_id: current_user.id, id: card.id), method: :delete)%></p>
+				</div>
+			<% end %>
+		<%end%>
+	</div>
+	<h4><%= link_to "Create a New Card", new_user_card_path(current_user) %></h4>	
+	<% end %>  
+</div>

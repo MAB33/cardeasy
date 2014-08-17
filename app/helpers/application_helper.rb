@@ -5,4 +5,12 @@ module ApplicationHelper
 		addresses.find_by(id: current_user.address_id)
 	end
 
+	def current_order
+		Order.find_by(status: "in progress", user_id: current_user.id)
+	end
+
+	def print_price(price)
+		number_to_currency price
+	end
+
 end
