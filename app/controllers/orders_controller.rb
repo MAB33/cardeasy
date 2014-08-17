@@ -50,16 +50,22 @@ class OrdersController < ApplicationController
 		end
 	end
 
-  def generate_user_card_for_lob
+	def checkout
+		generate_user_card_for_lob
+	end	
+
+	def generate_user_card_for_lob
 		### Generates the PDF to be sent to Lob API for print
 		@card_templates = CardTemplate.all
+		@user = User.find(current_user.id)
 
-		@card.addresses.each do |address|
-			Prawn::Document.generate("public/users_cards/User-#{@card.user_id}_Card-#{@card.id}_Address-#{address.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
-			pdf.image "public/card_templates/#{@card.card_template.template_path}", :position => :center, :width => 738, :height => 522
+		current_order.cards.each do |card|
+			card.addresses.each do |address|
+			Prawn::Document.generate("public/users_cards/User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
+			pdf.image "public/card_templates/#{card.card_template.template_path}", :position => :center, :width => 738, :height => 522
 			pdf.start_new_page
 			pdf.font("public/fonts/LaBelleAurore.ttf", :size => 16) do
-				pdf.text_box "Dear #{address.fname}, \n\n #{@card.message}",
+				pdf.text_box "Dear #{address.fname}, \n\n #{card.message}",
 				:leading => -4,
 				:at => [414, 477],
 				:height => 432, :width => 279,
@@ -70,8 +76,7 @@ class OrdersController < ApplicationController
 			end
 		end
 		end
-		### Updates the Card file attribute to the newly generated PDF
-		# @card.update(file: "/users_cards/User-#{@card.user_id}_Card-#{@card.id}.pdf")
+		end
 	end
 
 	private

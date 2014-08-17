@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
   get 'empty_cart' => 'orders#empty'
   post 'empty_cart' => 'orders#empty'
+
+  get 'checkout' => 'orders#checkout'
+  post 'checkout' => 'orders#checkout'
   
   root 'home#index'
 

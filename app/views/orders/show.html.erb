@@ -1,23 +1,24 @@
 <div class="units-row units-padding">
     <h2>My Cart</h2>
-    <h4>Total Number of Cards in Cart: <%= current_order.addresses.count %></h4>
-    <h4>Total Price: <%= print_price(current_order.addresses.count*1.85) %></h4>
     <% if current_order.cards.blank? %>
 		<p>Your cart is empty.</p>
     <% else %>
 		<div class="units-row units-padding">
 			<% current_order.cards.each do |card| %>
 				<div class="unit-25">
+					<%= "<img class='templateThumb' style='width:150px;' src='/card_templates/#{card.card_template.thumb_path}'>".html_safe %>
 					<h4><%= card.name %></h4>
-					<%= "<img class='templateThumb' src='/card_templates/#{card.card_template.thumb_path}'>".html_safe %>
-					<p><%= link_to "View Details", user_card_path(user_id: current_user.id, id: card.id) %> | 
-					<%= link_to "Remove from Cart", remove_from_cart_path(card_id: card.id), method: :post %></p>
-					<p>Qty: <%= card.addresses.count %> | 
-					Price: <%= print_price(card.addresses.count*card.price) %>
-					</p>
-
+					<p>Template Name: <%= card.card_template.name %><br>
+					<%= link_to "View", user_card_path(user_id: current_user.id, id: card.id) %> | 
+					<%= link_to "Edit", edit_user_card_path(user_id: current_user.id, id: card.id) %><br><br>
+					Qty: <%= card.addresses.count %> | 
+					Price: <%= print_price(card.addresses.count*card.price) %><br>
+					<%= link_to "Remove from Cart", remove_from_cart_path(card_id: card.id), method: :post %><br></p>
 				</div>
 			<% end %>
 		</div>
+		<h4>Total Number of Cards in Cart: <%= current_order.addresses.count %></h4>
+    	<h4>Total Price: <%= print_price(current_order.addresses.count*1.85) %></h4><br>
+		<%= link_to "Checkout", checkout_path, method: :post, class: 'btn' %>
 	<% end %>
 </div>

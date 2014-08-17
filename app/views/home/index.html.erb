@@ -1,4 +1,8 @@
 <div class="units-row units-padding">
-        <h3>Create a nice landing/home page here.</h3>
+	<% if current_user %>
+        <h3><%= link_to "Make a Card!", new_user_card_path(current_user) %></h3>
+    <% else %>
+    	<h3><%= link_to "Sign up", new_user_registration_path %> or <%= link_to "Sign In", new_user_session_path %> to start making cards!</h3>
+	<% end %>
 </div>
     

@@ -7,7 +7,7 @@
 		<p><%= @card.message %></p>
 		<h5>Send to (<%= @card.addresses.count %>) Contacts:</h5>
 		<% if @card.addresses.blank? %>
-			<p>You need to choose at least one contact to send this card to before you can add it to your cart. <%= link_to "Add someone!", edit_user_card_path(user_id: current_user.id, id: params[:id]) %></p>
+			<p><%= link_to "Add a contact(s)", edit_user_card_path(user_id: current_user.id, id: params[:id]) %></p>
 		<% else %>
 		<p><% @card.addresses.each do |address| %>
 			<%=address.fname%> <%=address.lname%><br>
@@ -27,6 +27,9 @@
 			<p>This card is in cart. <%= link_to "View my cart.", user_order_path(user_id: current_user.id, id: current_order.id)%></p>
 		<% else %>
 		<% if @card.addresses.blank? %>
+			<br><br>
+			<span style="cursor:not-allowed;" class="btn">Add to Cart</span><br>
+			You need to choose at least one contact to send this card to<br>before you can add it to your cart.
 		<% else %>
 			<%= form_tag add_to_cart_path, method: 'post' do %>
 				<%= hidden_field_tag :card_id, @card.id %>
