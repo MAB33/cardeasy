@@ -3,8 +3,6 @@
 	<% if current_user.cards.blank? %>
 		<p>You haven't create any cards yet. Add some <%= link_to "here", new_user_card_path(current_user) %>.</p>
 	<% else %>
-
-
 	<div class="units-row units-padding">
 		<% current_user.cards.each do |card| %>
 
@@ -23,6 +21,14 @@
 			<% end %>
 		<%end%>
 	</div>
-	<h4><%= link_to "Create a New Card", new_user_card_path(current_user) %></h4>	
-	<% end %>  
+	<% end %>
+
+	<h4><%= link_to "Create a New Card", new_user_card_path(current_user) %></h4>
+
+	<% if current_user.orders.find_by(status: "ordered") %>
+		<%= link_to "Past Orders", user_orders_path(current_user) %>
+	<% else %>
+		<p>No Orders Yet</p>
+	<% end %>
+  
 </div>

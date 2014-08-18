@@ -1,6 +1,7 @@
 class Address < ActiveRecord::Base
 	belongs_to :user
 	has_and_belongs_to_many :cards
+	has_many :cardlings
 	validates_presence_of :fname, :lname, :address_line1, :city, :state, :zip, :country, :birthday
 	validates_format_of :zip, :with => /\A\d{5}(-\d{4})?\Z/, :message => "should be in the form 12345 or 12345-1234"
 

@@ -35,4 +35,6 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  LOB_TEST_APIKEY = ENV["LOB_TEST_APIKEY"]
 end

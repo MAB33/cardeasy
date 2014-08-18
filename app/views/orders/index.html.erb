@@ -1,0 +1,19 @@
+<div class="units-row units-padding">
+    <h2>Order History and Queued Cards</h2>
+	<% current_user.orders.each do |order| %>
+		<ul>
+			<li>Order #: <%= order.id %>
+				<% order.cards.each do |card| %>
+					<% card.cardlings.each do |cardling| %>
+					<ul>
+						<li>Card #: <%= cardling.id %> | Status: <%= cardling.status %></li>
+					</ul>
+					<% end %>
+				<% end %>
+			</li>
+		</ul>
+	<%end%>
+
+
+  
+</div>

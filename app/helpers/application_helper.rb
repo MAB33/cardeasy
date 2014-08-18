@@ -9,6 +9,10 @@ module ApplicationHelper
 		Order.find_by(status: "in progress", user_id: current_user.id)
 	end
 
+	def past_orders
+		Order.find_by(status: "ordered", user_id: current_user.id)
+	end
+
 	def print_price(price)
 		number_to_currency price
 	end
