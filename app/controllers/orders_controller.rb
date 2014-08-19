@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
 	def set_delivery_date(date)
    		delivery_date = (date - 10)
    		delivery_date = delivery_date.change(:year => Time.now.year)
-   		if delivery_date >= Time.now
+   		if delivery_date < Time.now
    			delivery_date
    		else
    			delivery_date = delivery_date.change(:year => Time.now.year) + 1.year
@@ -75,7 +75,6 @@ class OrdersController < ApplicationController
 			end
 		end
 		current_order.update(status: "ordered")
-		send_card_to_lob
 		flash[:notice] = "Your order has been placed!"
 		redirect_to root_path
 	end
@@ -101,7 +100,10 @@ class OrdersController < ApplicationController
 		Lob.api_key = ENV["LOB_TEST_APIKEY"]
 		@lob = Lob()
 
-		cardling = Cardling.last
+		cardlings = Cardling.all
+
+		cardlings.each do |cardling|
+
 		user_address = cardling.card.user.addresses.find_by(id: cardling.card.user.address_id)
 
 		@job = @lob.jobs.create(
@@ -130,6 +132,7 @@ class OrdersController < ApplicationController
 		    double_sided: 1,
 		    full_bleed: 1
 		  })
+		end
 		puts @job
 	end
 

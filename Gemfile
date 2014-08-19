@@ -45,6 +45,8 @@ gem 'prawn'
 
 gem 'birthday', '~> 0.3.0'
 
+gem 'whenever', :require => false
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
