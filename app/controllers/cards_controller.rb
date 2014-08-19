@@ -60,7 +60,7 @@ class CardsController < ApplicationController
 
 	def destroy
 		current_order = Order.find_by(status: "in progress", user_id: current_user.id)
-      if @card.delete
+      	if @card.delete
 		if current_order && current_order.cards.blank?
 			current_order.delete
 		end
