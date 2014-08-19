@@ -22,6 +22,6 @@
 set :environment, "development"
 set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
 
-every 1.day, :at => '10:48 am' do
+every 1.day, :at => '3:50 pm' do
   rake "mytasks:collect_cards"
 end

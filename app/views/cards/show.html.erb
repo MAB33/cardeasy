@@ -10,7 +10,7 @@
 			<p><%= link_to "Add a contact(s)", edit_user_card_path(user_id: current_user.id, id: params[:id]) %></p>
 		<% else %>
 		<p><% @card.addresses.each do |address| %>
-			<%=address.fname%> <%=address.lname%><br>
+			<%=address.fname%> <%=address.lname%> (will be sent to print on <%= set_delivery_date(address.birthday) %>) <br>
 		<% end %></p>
 		<%end%>
 		<h5>Price per Card:</h5>

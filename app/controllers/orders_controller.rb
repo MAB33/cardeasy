@@ -52,11 +52,11 @@ class OrdersController < ApplicationController
 
 	def set_delivery_date(date)
    		delivery_date = (date - 10)
-   		delivery_date = delivery_date.change(:year => Time.now.year)
-   		if delivery_date < Time.now
-   			delivery_date
+   		delivery_date = delivery_date.change(:year => Date.today.year)
+   		if delivery_date < Date.today
+   			delivery_date = delivery_date + 1.year
    		else
-   			delivery_date = delivery_date.change(:year => Time.now.year) + 1.year
+   			delivery_date
    		end
    		delivery_date
 	end
@@ -65,7 +65,7 @@ class OrdersController < ApplicationController
 		current_order.cards.each do |card|
 			card.addresses.each do |address|
 				generate_card_pdf_for_lob(card, address)
-				@cardling = Cardling.create(file: "User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf", card_id: card.id, order_id: current_order.id, delivery_date: set_delivery_date(address.birthday), status: "queued", address_id: address.id)
+				@cardling = Cardling.create(file: "https://s3.amazonaws.com/card-bucket/User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf", card_id: card.id, order_id: current_order.id, delivery_date: set_delivery_date(address.birthday), status: "queued", address_id: address.id)
 			end
 			if @cardling.save
 				card.update(status: "ordered")
@@ -79,8 +79,19 @@ class OrdersController < ApplicationController
 		redirect_to root_path
 	end
 
+	def save_pdf_to_s3(path, name)
+		AWS.config( :access_key_id => ENV['AWS_ACCESS_KEY_ID'], :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'])
+		s3 = AWS::S3.new
+		bucket = s3.buckets['card-bucket']
+		obj = s3.buckets['card-bucket'].objects[name] 
+		obj.write(file: path)
+		puts "********** s3 success! **********"
+	end
+
 	def generate_card_pdf_for_lob(card, address)
-		Prawn::Document.generate("public/users_cards/User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf", :page_size => [738, 522], :margin => 0) do |pdf|
+		name = "User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf"
+		path = "public/users_cards/#{name}"
+		Prawn::Document.generate(path, :page_size => [738, 522], :margin => 0) do |pdf|
 			pdf.image "public/card_templates/#{card.card_template.template_path}", :position => :center, :width => 738, :height => 522
 			pdf.start_new_page
 			pdf.font("public/fonts/LaBelleAurore.ttf", :size => 16) do
@@ -94,46 +105,8 @@ class OrdersController < ApplicationController
 				:disable_wrap_by_char => true
 			end
 		end
-	end
-
-	def send_jobs_to_lob
-		Lob.api_key = ENV["LOB_TEST_APIKEY"]
-		@lob = Lob()
-
-		cardlings = Cardling.all
-
-		cardlings.each do |cardling|
-
-		user_address = cardling.card.user.addresses.find_by(id: cardling.card.user.address_id)
-
-		@job = @lob.jobs.create(
-		  name: "Order-#{cardling.order.id}_Card-#{cardling.card.id}",
-		  from: {
-		    name:   "#{cardling.card.user.fname} #{cardling.card.user.lname}" ,
-		    address_line1: user_address.address_line1,
-		    address_line2: user_address.address_line2,
-		    city:    user_address.city,
-		    state:  user_address.state,
-		    country: "US",
-		    zip:    user_address.zip
-		  },
-		  to: {
-		    name:    "#{cardling.address.fname} #{cardling.address.lname}",
-		    address_line1: cardling.address.address_line1,
-		    address_line2: cardling.address.address_line2,
-		    city:    cardling.address.city,
-		    state:  cardling.address.state,
-		    country: "US",
-		    zip:    cardling.address.zip
-		  },
-		  objects: {
-		    file:      "https://s3.amazonaws.com/card_bucket/User-2_Order-64_Address-18.pdf",
-		    setting_id: 203,
-		    double_sided: 1,
-		    full_bleed: 1
-		  })
-		end
-		puts @job
+		puts "************* prawn success ************"
+		save_pdf_to_s3(path, name)
 	end
 
 	private

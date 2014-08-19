@@ -43,7 +43,9 @@ gem 'validates_as_postal_code'
 
 gem 'prawn'
 
-gem 'birthday', '~> 0.3.0'
+gem 'paperclip'
+
+gem 'aws-sdk'
 
 gem 'whenever', :require => false
 

@@ -6,7 +6,13 @@
 				<% order.cards.each do |card| %>
 					<% card.cardlings.each do |cardling| %>
 					<ul>
-						<li>Card #: <%= cardling.id %> | Status: <%= cardling.status %></li>
+						<li>Card #: <%= cardling.id %> |
+						<% if cardling.status == "processed" %>
+							Delivery Status: <%= cardling.status.capitalize %> and on it's way!
+							<% else %>
+								Delivery Status: <%= cardling.status.capitalize %>
+							<% end %>
+						</li>
 					</ul>
 					<% end %>
 				<% end %>

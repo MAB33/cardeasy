@@ -17,4 +17,15 @@ module ApplicationHelper
 		number_to_currency price
 	end
 
+	def set_delivery_date(date)
+   		delivery_date = (date - 10)
+   		delivery_date = delivery_date.change(:year => Date.today.year)
+   		if delivery_date < Date.today
+   			delivery_date = delivery_date + 1.year
+   		else
+   			delivery_date
+   		end
+   		delivery_date
+	end
+
 end
