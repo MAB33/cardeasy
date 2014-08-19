@@ -19,10 +19,9 @@
 
 # Learn more: http://github.com/javan/whenever
 
-# every 1.day, :at => '4:30 am' do
-#   rake "mytasks:collect_cards"
-# end
+set :environment, "development"
+set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
 
-every :minute do
+every 1.day, :at => '10:48 am' do
   rake "mytasks:collect_cards"
 end
