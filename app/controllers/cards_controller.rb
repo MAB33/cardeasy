@@ -17,7 +17,7 @@ class CardsController < ApplicationController
 		@user = User.find(current_user.id)
 		@card = Card.new(card_params)
 		@card_templates = CardTemplate.all
-	  	@card.user = User.find(current_user.id)
+		@card.user = User.find(current_user.id)
 	  	@card.setting_id = "203"
 		@card.double_sided = "1"
 		@card.full_bleed = "1"

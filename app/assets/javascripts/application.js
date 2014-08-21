@@ -14,3 +14,16 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function(){
+	$('.bxslider').bxSlider({
+		slideWidth: 300,
+    	minSlides: 1,
+    	maxSlides: 4,
+    	slideMargin: 10
+	});
+
+	$(".flashMessages").click(function() {
+		$(this).slideUp(500);
+	});
+});

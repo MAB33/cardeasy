@@ -1,28 +1,81 @@
 // $main-font: 'Arial', sans-serif;
+// $green: #4EA68D;
+$green: #478DB2;
+$red: #AD1920;
 
 /****************** GENERAL *****************/
 html, body {
 	// font-family: $main-font;
 	// padding: 0;
+	background-image: url('/images/wavegrid.png');
+	background-attachment: fixed;
+	background-color:rgba(0,0,0,0);
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Muli', Helvetica, Arial, sans-serif;
+}
+h1 {
+	font-size: 30px;
+}
+a {
+	text-decoration:none;
 }
 .units-container {
 	padding: 30px;
 }
-ul li {
-	list-style-type:none;
+.unindentedList {
+	list-style-type: none;
+    list-style-position:inside;
+    margin:0;
 }
+// .unindentedList li {
+// 	padding-bottom: 12px;
+// }
 .unit-33, .unit-25 {
 	text-align:center;
+}
+.general-container {
+	padding-top:100px;
+}
+button, input[type="submit"], .btn {
+	background-color: $green;
+	margin:5px 1px;
 }
 /********************************************/
 
 
 /**************** NAVIGATION ****************/
 nav {
-	background-color: #ccc;
+	// padding:10px;
+	z-index:999;
+	background-color: $green;
 	width: 100%;
 	text-align: center;
+	overflow: auto;
+	font-family: "Muli", sans-serif;
+	font-size: 11pt;
+	color: white;
+	position: fixed;
+	a {
+		text-decoration: none;
+		color: white;
+	}
+	a:hover {
+		color:white;
+		opacity:.6;
+	}
+	#logo a:hover {
+		opacity: 1;
+	}
+	#logo {
+		display: inline-block;
+		float: left;
+		margin: 20px;
+		font-size: 14pt;
+	}
 	#navLinks {
+		display: inline-block;
+		float: right;
 		margin: 0 auto;
 		li {
 			display: inline-block;
@@ -30,41 +83,77 @@ nav {
 		}
 	}
 }
-ul#menu, ul#menu ul.sub-menu {
-    padding:0;
-    margin: 0;
+/********************************************/
+
+
+/****************** HOME *******************/
+#welcome {
+		padding-top: 100px;
+		background-color: $green;
+		text-align:center;
+	h1 {
+		font-family: 'Muli', sans-serif;
+		font-size: 30pt;
+		color:white;
+		margin-bottom: 20px;
+	}
+	h3 {
+		color: white;
+		font-family: 'Muli', sans-serif;
+	}
+	img {
+		width: 100%;
+		padding-bottom: 25px;
+	}
 }
-ul#menu li, ul#menu ul.sub-menu li {
-    list-style-type: none;
-    display: inline-block;
+#cardCollection {
+	h1 {
+		font-family: 'Muli', sans-serif;
+		font-size: 30pt;
+		color: black;
+		margin-bottom: 20px;
+	}
 }
-/*Link Appearance*/
-ul#menu li a, ul#menu li ul.sub-menu li a {
-    text-decoration: none;
-    color: #fff;
-    background: #666;
-    padding: 5px;
-    display:inline-block;
+/********************************************/
+
+
+/****************** SIGN IN / SIGN UP *******************/
+.signUpsignIn {
+	background-color: white;
+	display:inline-block;
+	padding: 30px;
+	margin: auto 0;
 }
-/*Make the parent of sub-menu relative*/
-ul#menu li {
-    position: relative;
+
+input[type="email"], input[type="password"], input[type="text"] {
+	margin:10px 0;
 }
-/*sub menu*/
-ul#menu li ul.sub-menu {
-    display:none;
-    position: absolute;
-    top: 30px;
-    left: 0;
-    width: 100px;
+/********************************************/
+
+
+/****************** PROFILE PAGE *******************/
+.profile_AddressTable {
+	background-color:white;
+	margin-top:10px;
 }
-ul#menu li:hover ul.sub-menu {
-    display:block;
+#profile_MyCards {
+	text-align:center;
+	.unindentedList {
+		list-style-type: none;
+	    list-style-position:inside;
+	    margin:0;
+	}
+}
+#profileContainer {
+	h2 {
+		padding-bottom:10px;
+	}
 }
 /********************************************/
 
 
 /****************** CARDS *******************/
+
 .templateThumb {
 	width: 100%;
 	padding: 10px 0;
@@ -72,5 +161,29 @@ ul#menu li:hover ul.sub-menu {
 .textArea {
 	width: 400px;
 	height: 200px;
+}
+/********************************************/
+
+
+/************* FLASH MESSAGES ***************/
+.flashMessages {
+	background-color:white;
+	overflow:auto;
+	padding: 3px 10px 0px 10px;
+	cursor: pointer;
+	h5 {
+		font-size: 15px;
+		display: inline-block;
+		float: left;
+	}
+}
+.dismissFlash {
+	float: right;
+}
+#flashNotice h5 {
+	color: $green;
+}
+#flashAlert h5 {
+	color: $red;
 }
 /********************************************/

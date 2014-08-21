@@ -2,41 +2,45 @@
 <html>
 <head>
   <title>Cardeasy</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 </head>
 <body>
 
+  
+
+  <nav>
   <% if notice %>
     <div class="flashMessages" id="flashNotice" >
-      <h4><%= notice %> | <span class="dismissFlash">x</span></h4>
+      <h5><%= notice %></h5><div class="dismissFlash"><h5>x</h5></div>
     </div>
   <% end %>
   <% if alert %>
     <div class="flashMessages" id="flashAlert">
-      <h4><%= alert %> | <span class="dismissFlash">x</span></h4>
+      <h5><%= notice %></h5><div class="dismissFlash"><h5>x</h5></div>
     </div>
   <% end %>
-
-  <nav>
+    <div id="logo"><a href="/">cardseasy</a></div>
     <ul id="navLinks">
-      <li><%= link_to 'Home', root_path %></li>
       <%= render 'devise/menu/registration_items' %>
       <%= render 'devise/menu/login_items' %>
-      
     </ul>
   </nav>
 
   
 
-<div class="units-container">
+
 
   <%= yield %>
 
-</div>
+
 
 </body>
 </html>
