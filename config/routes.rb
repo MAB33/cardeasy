@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
 
+  get 'card_templates/index'
+
+  get 'card_templates/show'
+
   get 'orders/new'
 
   devise_for :users
+
+  resources :card_templates
 
   resources :users do
   	resources :addresses

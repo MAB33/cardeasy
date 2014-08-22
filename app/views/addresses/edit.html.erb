@@ -1,3 +1,4 @@
+<div id="profileContainer" class="units-container general-container">
 <div class="units-row units-padding">
         <h3>Edit Address:</h3>
 	<% if @address.errors.full_messages.any? %>
@@ -5,7 +6,7 @@
 			<% @address.errors.full_messages.each do |error_message| %>
 			<li><%= error_message %></li> <br />
 			<% end %>
-		<ul>
+		</ul>
 	<% end %>
 	<%= form_for [@user, @address], url: user_address_path do |f| %>
 		<%= f.label "First Name*" %><br>
@@ -19,7 +20,7 @@
 		<%= f.label "City*" %><br>
 		<%= f.text_field :city %><br>
 		<%= f.label "State*" %><br>
-		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br>
+		<%= f.select :state, options_for_select(us_states), :prompt => "Select a State" %><br><br>
 		<%= f.label "Zip Code*" %><br>
 		<%= f.text_field :zip %><br>
 		<p >Country:<br>
@@ -30,6 +31,7 @@
 		<%= f.date_select("birthday", order: [:day, :month, :year], start_year: 1900, end_year: Date.current.year) %><br><br>
 		<%= f.submit 'Update Address' %>
 	<% end %>
+</div>
 </div>
 
 

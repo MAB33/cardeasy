@@ -15,15 +15,26 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function(){
-	$('.bxslider').bxSlider({
-		slideWidth: 300,
-    	minSlides: 1,
-    	maxSlides: 4,
-    	slideMargin: 10
-	});
+$(document).on('ready page:load', function(){
 
 	$(".flashMessages").click(function() {
 		$(this).slideUp(500);
 	});
+
+
+	$('.wrapper').hide();
+	$('#cardWrapper').show();
+	// $(".dropdownTrigger").click(function(){
+	//     $(this).siblings('.wrapper').slideToggle(600);
+ //  });
+
+	$(".dropdownTrigger").click(function(){
+    if ( $(this).siblings('.wrapper').is(":hidden") ) {
+    	$(this).next('.fa-plus-circle').css('display', 'none');
+      $(this).siblings('.wrapper').slideDown();
+    } else {
+      $(this).siblings('.wrapper').slideUp();
+    }
+  });
+
 });
