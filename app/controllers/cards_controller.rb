@@ -17,7 +17,7 @@ class CardsController < ApplicationController
 		@user = User.find(current_user.id)
 		@card = Card.new(card_params)
 		@card_templates = CardTemplate.all
-	  	@card.user = User.find(current_user.id)
+		@card.user = User.find(current_user.id)
 	  	@card.setting_id = "203"
 		@card.double_sided = "1"
 		@card.full_bleed = "1"
@@ -51,7 +51,7 @@ class CardsController < ApplicationController
       if @card.update(card_params)
       	# generate_user_card_for_lob
         flash[:notice] = "The card has been updated."
-        redirect_to user_card_path
+        redirect_to profile_path(current_user)
       else
         flash[:alert] = "There was a problem updating the card. Please try again."
         render :edit
@@ -65,10 +65,10 @@ class CardsController < ApplicationController
 			current_order.delete
 		end
         flash[:notice] = "The card has been deleted."
-        redirect_to user_cards_path
+        redirect_to profile_path(current_user)
       else
         flash[:alert] = "There was a problem deleting the card."
-        redirect_to user_cards_path
+        redirect_to profile_path(current_user)
       end
 	end
 

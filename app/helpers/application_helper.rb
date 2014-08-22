@@ -28,4 +28,24 @@ module ApplicationHelper
    		delivery_date
 	end
 
+	def user_contacts
+		user_addresses = []
+		addresses = Address.all
+		addresses.each do |address|
+			if address.user_id = current_user.id
+				user_addresses << address
+			end
+		end
+	end
+
+	def user_cards
+		user_cards = []
+		cards = Card.all
+		cards.each do |card|
+			if card.user_id = current_user.id
+				user_cards << card
+			end
+		end
+	end
+
 end

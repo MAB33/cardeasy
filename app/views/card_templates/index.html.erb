@@ -1,0 +1,11 @@
+<div id="profileContainer" class="units-container general-container">
+	<div class="units-row units-padding">
+		<h1>Cards</h1>
+		<ul id="profile_MyCards" class="blocks-5">
+			<% @card_templates.each do |template| %>
+				<li><%= template.name %>
+				</li>
+			<% end %>
+		</ul>
+	</div>
+</div>

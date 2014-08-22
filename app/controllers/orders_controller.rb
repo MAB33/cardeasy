@@ -24,11 +24,11 @@ class OrdersController < ApplicationController
 		elsif @card.status == "draft"
 			if current_order
 				@card.update(order_id: current_order.id, status: "in cart")
-				flash[:notice] = "Card has been your cart!"
+				# flash[:notice] = "Card has been added to your cart!"
 			else
 			    @order = Order.create(user_id: @user.id, status: "in progress")
 			    @card.update(order_id: current_order.id, status: "in cart")
-			    flash[:notice] = "Card has been your cart!"
+			    # flash[:notice] = "Card has been added to your cart!"
 		   	end
 		   	redirect_to user_card_path(id: @card.id, user_id: current_user.id)
 		end
@@ -37,7 +37,7 @@ class OrdersController < ApplicationController
 	def remove_from_cart
 		@card = Card.find(params[:card_id])
 		if @card.update(order_id: nil, status: "draft")
-			flash[:notice] = "Card has been removed from cart."
+			# flash[:notice] = "Card has been removed from cart."
 			if current_order.cards.blank?
 				current_order.delete
 				redirect_to empty_cart_path

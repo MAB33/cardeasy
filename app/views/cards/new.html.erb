@@ -1,27 +1,28 @@
-<div class="units-row units-padding">
-<h3>Create a New Card: Step 1</h3>
+<div id="profileContainer" class="units-container general-container">
+	<div class="units-row">
+<h2>Personalize Your Card</h2>
 <% if @card.errors.full_messages.any? %>
 	<ul>
 		<% @card.errors.full_messages.each do |error_message| %>
 		<li><%= error_message %></li> <br />
 		<% end %>
-	<ul>
+	</ul>
 <% end %>
-<%= form_for [@user, @card], url: user_cards_path do |f| %>
-	<h4>Choose a Template</h4>
-	<div class="units-row units-padding">
-	<% @card_templates.each do |template| %>
-		<div class="unit-25">
-			<%= "<img class='templateThumb' src='/card_templates/#{template.thumb_path}'><br>".html_safe %>
-			<%= f.radio_button :card_template_id, template.id %> 
-			<%= label :template_choice, template.name %>
-		</div>
-	<% end %>
 	</div>
+<%= form_for [@user, @card], url: user_cards_path do |f| %>
+	<!-- <h4>Card</h4> -->
+
+<div class="units-row">
+	<div class="unit-35">
+	<%= "<img class='templateThumb' src='/card_templates/#{@card_templates.find_by(id: params[:card_template_id]).thumb_path}'><br>".html_safe %>
+	<%= f.hidden_field :card_template_id, :value => @card_templates.find_by(id: params[:card_template_id]).id %>
+	</div>
+
+	<div class="unit-65">
 	<h4><%= f.label "Give this Card a name" %></h4>
-	<%= f.text_field :name %><br><br>
+	<%= f.text_field :name %>
 	<h4>Add Your Message (300 word limit)</h4>
-	<%= f.text_area :message, :placeholder => "Just write your message and closing here. We'll handle the salutation (Dear...) part for you by adding in all of the recipient's name when we print your card(s). Don't forget to add your closing like this:\n\nSincerely,\nMal", class: "textArea" %><br><br>
+	<%= f.text_area :message, :placeholder => "Just write your message and closing here. We'll handle the salutation (Dear...) part for you by adding in all of the recipient's name when we print your card(s). Don't forget to add your closing like this:\n\nSincerely,\nMal", class: "textArea" %>
 	<h4><%= f.label "Send this card to" %></h4>
 	<% if current_user.addresses.blank? %>
 			<p>You have no saved contacts. Add some <%= link_to "here", new_user_address_path %>.</p>
@@ -32,5 +33,7 @@
     <%end%>
     <% end %><br>
 	<%= f.submit 'Create Card' %>
+	</div>
+	</div>
 <% end %>
 </div>

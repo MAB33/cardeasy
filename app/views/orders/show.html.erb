@@ -1,24 +1,64 @@
-<div class="units-row units-padding">
-    <h2>My Cart</h2>
-    <% if current_order.cards.blank? %>
-		<p>Your cart is empty.</p>
-    <% else %>
-		<div class="units-row units-padding">
-			<% current_order.cards.each do |card| %>
-				<div class="unit-25">
-					<%= "<img class='templateThumb' style='width:150px;' src='/card_templates/#{card.card_template.thumb_path}'>".html_safe %>
-					<h4><%= card.name %></h4>
-					<p>Template Name: <%= card.card_template.name %><br>
-					<%= link_to "View", user_card_path(user_id: current_user.id, id: card.id) %> | 
-					<%= link_to "Edit", edit_user_card_path(user_id: current_user.id, id: card.id) %><br><br>
-					Qty: <%= card.addresses.count %> | 
-					Price: <%= print_price(card.addresses.count*card.price) %><br>
-					<%= link_to "Remove from Cart", remove_from_cart_path(card_id: card.id), method: :post %><br></p>
-				</div>
-			<% end %>
-		</div>
-		<h4>Total Number of Cards in Cart: <%= current_order.addresses.count %></h4>
-    	<h4>Total Price: <%= print_price(current_order.addresses.count*1.85) %></h4><br>
-		<%= link_to "Checkout", checkout_path, method: :post, class: 'btn' %>
-	<% end %>
+<div id="profileContainer" class="units-container general-container">
+	<div class="units-row units-padding">
+		<h2>My Cart</h2>
+	    <% if current_order.cards.blank? %>
+			<p>Your cart is empty.</p>
+	    <% else %>
+		<table class="profile_AddressTable">
+			    <thead>
+			        <tr>
+			        	<th></th>
+			            <th>Item Details</th>
+			            <th style="text-align:right;">Price</th>
+			            <th style="text-align:right;">Quantity</th>
+			            <th style="text-align:right;">Subtotal</th>
+			            <th style="text-align:right;">X</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			    	<% current_order.cards.each do |card| %>
+				        	<tr>
+				        		<td><%= "<img class='templateThumb' style='width:150px;' src='/card_templates/#{card.card_template.thumb_path}'>".html_safe %></td>
+								<td><p><b>Name:</b> <%= card.name %><br>
+									</p>
+									
+									<%= link_to user_card_path(user_id: current_user.id, id: card.id) do %>
+										<i class="fa fa-info-circle fa-lg"></i>
+									<% end %> 
+									
+									<%= link_to edit_user_card_path(user_id: current_user.id, id: card.id) do %>
+										<i class="fa fa-pencil fa-lg"></i>
+									<%end%> <br>
+									
+								</td>
+								<td style="text-align:right;"><%= print_price(card.price) %></td>
+								<td style="text-align:right;"><%= card.addresses.count %></td>
+								<td style="text-align:right;"> <%= print_price(card.price * card.addresses.count) %></td>
+								<td style="text-align:right;"><b><%= link_to "X", remove_from_cart_path(card_id: card.id), method: :post %></b></td>
+							</tr>
+					<% end %> 
+			    </tbody>
+			    <tfoot>
+					<tr>
+						<td></td>
+						<td></td>
+						<td style="text-align:right;">Total:</td>
+						<td style="text-align:right;"><%= current_order.addresses.count %></td>
+						<td style="text-align:right;"><%= print_price(current_order.addresses.count*1.85) %></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td style="text-align:right;"><%= link_to "Checkout", checkout_path, method: :post, class: 'btn' %></td>
+						<td></td>
+					</tr>
+				</tfoot>
+			</table>			
+		<% end %>
+	</div>
 </div>
+
+		

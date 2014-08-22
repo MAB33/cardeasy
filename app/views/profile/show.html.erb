@@ -1,0 +1,114 @@
+<div id="profileContainer" class="units-container general-container">
+	<div class="units-row units-padding">
+		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"></i><!-- <i class="fa fa-minus-circle"> --></i> My Cards / <%= link_to "Create a New Card", new_user_card_path(current_user) %></h2>
+		<div class="wrapper" id="cardWrapper">
+			<% if current_user.cards.blank? %>
+				<p>You haven't create any cards yet. Add some <%= link_to "here", new_user_card_path(current_user) %>.</p>
+			<% elsif current_user.cards %>
+				<p>Currently, you have no save cards.</p>
+			<% else %>
+				<ul id="profile_MyCards" class="blocks-5">
+				<% user_cards.each do |card| %>
+					<% if card.status == "ordered" %>
+					<% else %>
+							<li>
+								<%= "<img class='templateThumb' style='width:100%' src='/card_templates/#{card.card_template.thumb_path}'>".html_safe %>
+								<h4><%= card.name %></h4>
+									<p>
+										<% if card.status == "in cart" %>
+											<i class="fa fa-shopping-cart fa-lg"></i>
+										<% end %>
+										<%= link_to user_card_path(user_id: current_user.id, id: card.id) do %>
+											<i class="fa fa-info-circle fa-lg"></i>
+										 <% end %>
+										<%= link_to edit_user_card_path(user_id: current_user.id, id: card.id) do %>
+											<i class="fa fa-pencil fa-lg"></i>
+											<% end %>
+										<%= link_to user_card_path(user_id: current_user.id, id: card.id), method: :delete do %>
+											<i class="fa fa-trash-o fa-lg"></i>
+										<% end %>
+									</p>
+							</li>
+					<% end %>
+				<% end %>
+				</ul>			
+			<% end %>
+		</div>
+	</div>
+	<div class="units-row units-padding">
+		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"></i> Address Book / <%= link_to "Add New Address", new_user_address_path(current_user) %></h2> 
+		<div class="wrapper">
+		<% if current_user.addresses.blank? %>
+			<p>You have no saved addresses. Add some <%= link_to "here", new_user_address_path %>.</p>
+		<% else %>
+			<table class="profile_AddressTable">
+			    <thead>
+			        <tr>
+			            <th>Name</th>
+			            <th>Birthday</th>
+			            <th>Address</th>
+			            <th>Action</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			    	<% user_contacts.each do |address| %>
+						<% if address.id == current_user.address_id %>	
+						<% else %>
+				        	<tr>
+								<td><%= address.fname %> <%= address.lname %></td>
+								<td><%= address.birthday.to_formatted_s(:long_ordinal) %></td>
+								<td><%= "#{address.address_line1}, #{address.city}, #{address.state} #{address.zip}" %></td>
+								<td>
+								<%= link_to edit_user_address_path(user_id: current_user.id, id: address.id) do %>
+									<i class="fa fa-pencil fa-lg"></i>
+								<% end %>
+								<%= link_to user_address_path(user_id: current_user, id: address.id), method: :delete do %>
+									<i class="fa fa-trash-o fa-lg"></i> 
+								<% end %>
+								</td>
+							</tr>
+						<% end %>
+					<% end %> 
+			    </tbody>
+			</table><br>
+		<% end %>
+		</div>
+	</div>
+	<div class="units-row units-padding">
+		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"> </i> Account Information / <%= link_to "Edit", edit_user_registration_path %></h2> 
+		<div class="wrapper">
+		<h3>My Personal Info</h3>
+		<ul class="unindentedList">
+			<li><b>First Name:</b> <%= current_user.fname %></li>
+			<li><b>First Name:</b> <%= current_user.lname %></li>
+			<li><b>Email:</b> <%= current_user.email %></li><br>
+		</ul>
+		<h3>My Address</h3>
+		<% if current_user.address_id.blank? %>
+			<p>You do not have a an address on file. In order, to send cards you must set one up <%= link_to "here", new_user_address_path %>.</p>
+		<% else %>
+		<table class="profile_AddressTable">
+			    <thead>
+			        <tr>
+			            <th>Name</th>
+			            <th>Address</th>
+			            <th>Action</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+					<tr>
+						<td><%= user_primary_address.fname %> <%= user_primary_address.lname %></td>
+						<td><%= "#{user_primary_address.address_line1}, #{user_primary_address.city}, #{user_primary_address.state} #{user_primary_address.zip}" %></td>
+						<td><%= link_to edit_user_address_path(user_id: current_user.id, id: user_primary_address.id) do %>
+								<i class="fa fa-pencil fa-lg"></i>
+							<% end %>
+						</td>
+					</tr>
+			    </tbody>
+			</table>
+		<% end %>
+		<h3>Cancel my account</h3>
+          <p>We're sorry to see you go, but <%= link_to "click here", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete %> if you would like to delete your accout.</p>   
+	</div>
+	</div>
+</div>
