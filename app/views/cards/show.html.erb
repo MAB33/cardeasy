@@ -12,32 +12,25 @@
 		<h4>Send to (<%= @card.addresses.count %>) Contacts:</h4>
 		<% if @card.addresses.blank? %>
 			<p><%= link_to "Add a contact(s)", edit_user_card_path(user_id: current_user.id, id: params[:id]) %></p>
-		<% else %>
-
-			
-
+		<% else %>	
 		<table class="profile_AddressTable">
-		<thead>
-			        <tr>
-			            <th>Name</th>
-			            <th>Birthday</th>
-			            <th>Will be sent for delivery on</th>
-			           
-			        </tr>
-			    </thead>
-			    <tbody>
-			    	<% @card.addresses.each do |address| %>
-				        	<tr>
-								<td><%=address.fname%> <%=address.lname%></td>
-								<td><%= address.birthday.to_formatted_s(:long_ordinal) %></td>
-								<td><%= set_delivery_date(address.birthday).to_formatted_s(:long_ordinal) %></td>
-						
-							</tr>
+			<thead>
+		        <tr>
+		            <th>Name</th>
+		            <th>Birthday</th>
+		            <th>Will be sent for delivery on</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		    	<% @card.addresses.each do |address| %>
+		        	<tr>
+						<td><%=address.fname%> <%=address.lname%></td>
+						<td><%= address.birthday.to_formatted_s(:long_ordinal) %></td>
+						<td><%= set_delivery_date(address.birthday).to_formatted_s(:long_ordinal) %></td>	
+					</tr>
 				<%end%>
-			    </tbody>
-			</table>
-			
-	
+		    </tbody>
+		</table>
 		<%end%>
 
 		<p><%= link_to edit_user_card_path(user_id: current_user.id, id: params[:id]) do %>
@@ -63,7 +56,4 @@
 		<% end %>
 		<% end %></div>
 		</div>
-		
-		
-
 </div>

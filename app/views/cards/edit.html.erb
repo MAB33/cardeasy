@@ -1,39 +1,37 @@
 <div id="profileContainer" class="units-container general-container">
 	<div class="units-row">
-<h2>Update Card</h2>
-<% if @card.errors.full_messages.any? %>
-	<ul>
-		<% @card.errors.full_messages.each do |error_message| %>
-		<li><%= error_message %></li> <br />
+		<h2>Update Card</h2>
+		<% if @card.errors.full_messages.any? %>
+			<ul>
+				<% @card.errors.full_messages.each do |error_message| %>
+				<li><%= error_message %></li> <br />
+				<% end %>
+			</ul>
 		<% end %>
-	</ul>
-<% end %>
 	</div>
-<%= form_for [@user, @card], url: user_card_path do |f| %>
-	<!-- <h4>Choose a Template</h4> -->
-	<div class="units-row">
-		<div class="unit-35">
-			<%= "<img class='templateThumb' src='/card_templates/#{@card.card_template.thumb_path}'>".html_safe %>
-			<%= f.radio_button :card_template_id, @card.card_template.id %> 
-			<%= label :template_choice, @card.card_template.name %>
+	<%= form_for [@user, @card], url: user_card_path do |f| %>
+		<div class="units-row">
+			<div class="unit-30">
+				<%= "<img class='templateThumb' src='/card_templates/#{@card.card_template.thumb_path}'>".html_safe %>
+			</div>
+			<div class="unit-70">
+				<h4><%= f.label "Card Name" %></h4>
+				<%= f.text_field :name %><br>
+				<h4><%= f.label "Write Your Message (300 word limit)" %></h4>
+				<%= f.text_area :message, class: "textArea" %>
+				<h4><%= f.label "Send this card to" %></h4>
+				<% if current_user.addresses.blank? %>
+					<p>You have no saved contacts. Add some <%= link_to "here", new_user_address_path %>.</p>
+				<% else %>
+					<% current_user.addresses.each do |address| %>
+						<%= check_box_tag "card[address_ids][]", address.id, @card.addresses.include?(address)%>
+						<%=address.fname%> <%=address.lname%><br>
+					<%end%>
+				<% end %><br>
+				<%= f.submit 'Update Card' %>
+				<%= link_to "Delete Card", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete, class: "btn" %>
+			</div>
 		</div>
-		<div class="unit-65">
-	<h4><%= f.label "Card Name" %></h4>
-	<%= f.text_field :name %><br>
-	<h4><%= f.label "Write Your Message (300 word limit)" %></h4>
-	<%= f.text_area :message, class: "textArea" %>
-	<h4><%= f.label "Send this card to" %></h4>
-	<% if current_user.addresses.blank? %>
-			<p>You have no saved contacts. Add some <%= link_to "here", new_user_address_path %>.</p>
-		<% else %>
-	<% current_user.addresses.each do |address| %>
-      <%= check_box_tag "card[address_ids][]", address.id, @card.addresses.include?(address)%>
-      <%=address.fname%> <%=address.lname%> <br>
-    <%end%>
-    <% end %><br>
-	<%= f.submit 'Update Card' %>
-	<%= link_to "Delete Card", user_card_path(user_id: current_user.id, id: params[:id]), method: :delete, class: "btn" %>
-	</div>
-<% end %>
+	<% end %>
 </div>
 

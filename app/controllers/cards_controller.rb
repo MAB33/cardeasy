@@ -51,7 +51,7 @@ class CardsController < ApplicationController
       if @card.update(card_params)
       	# generate_user_card_for_lob
         flash[:notice] = "The card has been updated."
-        redirect_to profile_path(current_user)
+        redirect_to user_card_path
       else
         flash[:alert] = "There was a problem updating the card. Please try again."
         render :edit

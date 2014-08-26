@@ -1,11 +1,9 @@
 <div id="profileContainer" class="units-container general-container">
 	<div class="units-row units-padding">
-		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"></i><!-- <i class="fa fa-minus-circle"> --></i> My Cards / <%= link_to "Create a New Card", new_user_card_path(current_user) %></h2>
+		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"></i><!-- <i class="fa fa-minus-circle"> --></i> My Cards / <%= link_to "Make a New Card", card_templates_index_path %></h2>
 		<div class="wrapper" id="cardWrapper">
-			<% if current_user.cards.blank? %>
-				<p>You haven't create any cards yet. Add some <%= link_to "here", new_user_card_path(current_user) %>.</p>
-			<% elsif current_user.cards %>
-				<p>Currently, you have no save cards.</p>
+			<% if user_cards.blank? %>
+				<p>You haven't create any cards yet. Add some <%= link_to "here", card_templates_index_path %>.</p>
 			<% else %>
 				<ul id="profile_MyCards" class="blocks-5">
 				<% user_cards.each do |card| %>
@@ -31,15 +29,15 @@
 							</li>
 					<% end %>
 				<% end %>
-				</ul>			
+				</ul>		
 			<% end %>
 		</div>
 	</div>
 	<div class="units-row units-padding">
-		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"></i> Address Book / <%= link_to "Add New Address", new_user_address_path(current_user) %></h2> 
-		<div class="wrapper">
+		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"></i> Address Book / <%= link_to "Add New Address", new_user_address_path(user_id: current_user.id) %></h2> 
+		<div class="wrapper" id="addressWrapper">
 		<% if current_user.addresses.blank? %>
-			<p>You have no saved addresses. Add some <%= link_to "here", new_user_address_path %>.</p>
+			<p>You have no saved addresses. Add some <%= link_to "here", new_user_address_path(user_id: current_user.id) %>.</p>
 		<% else %>
 			<table class="profile_AddressTable">
 			    <thead>
@@ -70,13 +68,32 @@
 						<% end %>
 					<% end %> 
 			    </tbody>
-			</table><br>
+			</table>
 		<% end %>
 		</div>
 	</div>
 	<div class="units-row units-padding">
+		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"> </i> Order History</h2> 
+		<div class="wrapper" id="orderWrapper">
+			<% if current_user.orders.blank? %>
+				<p>You have no past orders.</p>
+			<% else %>
+				<% user_orders.each do |order| %>
+					<h4>Order ID: <%= order.id %></h4>
+					<% order.cardlings.each do |cardling| %>
+					<% if cardling.status == "processed" %>
+					<p>Card ID: <%= cardling.id %> | Status: <%= cardling.status %></p>
+					<% else %>
+					<p>Card ID: <%= cardling.id %> | Status: <%= cardling.status %> <%= link_to "(Cancel)", user_cardling_path(id: cardling.id, user_id: current_user.id), method: :delete %></p>
+					<% end %>
+					<% end %><br>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	<div class="units-row units-padding">
 		<h2 class="dropdownTrigger"><i class="fa fa-plus-circle"> </i> Account Information / <%= link_to "Edit", edit_user_registration_path %></h2> 
-		<div class="wrapper">
+		<div id="accountWrapper" class="wrapper">
 		<h3>My Personal Info</h3>
 		<ul class="unindentedList">
 			<li><b>First Name:</b> <%= current_user.fname %></li>
@@ -85,7 +102,7 @@
 		</ul>
 		<h3>My Address</h3>
 		<% if current_user.address_id.blank? %>
-			<p>You do not have a an address on file. In order, to send cards you must set one up <%= link_to "here", new_user_address_path %>.</p>
+			<p>You do not have a an address on file. In order, to send cards you must set one up <%= link_to "here", new_user_address_path(user_id: current_user.id) %>.</p>
 		<% else %>
 		<table class="profile_AddressTable">
 			    <thead>
@@ -109,6 +126,6 @@
 		<% end %>
 		<h3>Cancel my account</h3>
           <p>We're sorry to see you go, but <%= link_to "click here", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete %> if you would like to delete your accout.</p>   
-	</div>
+		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-namespace :mytasks do
+namespace :cardseasy do
 	desc "Gathers all cardlings with a delivery_date that matches the current date"
 	task collect_cards: :environment do
 		Lob.api_key = ENV["LOB_TEST_APIKEY"]

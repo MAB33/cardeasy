@@ -24,7 +24,7 @@
   <% end %>
   <% if alert %>
     <div class="flashMessages" id="flashAlert">
-      <h5><%= notice %></h5><div class="dismissFlash"><h5>x</h5></div>
+      <h5><%= alert %></h5><div class="dismissFlash"><h5>x</h5></div>
     </div>
   <% end %>
     <div id="logo"><a href="/">cardseasy</a></div>
@@ -35,6 +35,10 @@
   </nav>
 
   <%= yield %>
+  
+  <footer>
+    <p>Footer</p>
+  </footer>
 
 </body>
 </html>

@@ -1,47 +1,37 @@
 <div id="welcome" class="units-container">
+	<h1>We make sending birthday cards easy.</h1>
 	<div class="units-row units-padding">
-		<!-- <div class="unit-100"> -->
-			<h1>We make sending birthday cards easy.</h1>
-		<!-- </div> -->
-		<div class="units-row units-padding">
-		    <div class="unit-33">
-		    	<img src="images/card-circle.png" alt="">
-		    	<h3>Pick a card and write a personalized message</h3>
-		    </div>
-		    <div class="unit-33">
-			    <img src="images/friends-circle.png" alt="">
-		    	<h3>Choose one or more friends and family to send it to</h3>
-		    </div>
-		    <div class="unit-33">
-			    <img src="images/mailbox-circle.png" alt="">
-		    	<h3>We'll mail it out in time for the recipient's birthday </h3>
-		    </div>
+		<div class="unit-33">
+			<img src="images/card-circle.png" alt="">
+			<h3>Pick a card and write a personalized message</h3>
+		</div>
+		<div class="unit-33">
+		    <img src="images/friends-circle.png" alt="">
+			<h3>Choose one or more friends and family to send it to</h3>
+		</div>
+		<div class="unit-33">
+		    <img src="images/mailbox-circle.png" alt="">
+			<h3>We'll mail it out in time for the recipient's birthday </h3>
 		</div>
 	</div>
 </div>
 <div id="cardCollection" class="units-container">
 	<div class="units-row units-padding">
-			<h1>Popular Cards</h1>
-		</div>
-		<ul id="profile_MyCards" class="blocks-4">
-				<% @card_templates.each do |template| %>
-					<li>
-						<%= "<img class='templateThumb' style='width:100%' src='/card_templates/#{template.thumb_path}'>".html_safe %>
-						<h4><%= template.name %></h4>
-							Price: $1.85<br>
-							<% if current_user %>
-							<%= link_to "Personalize", new_user_card_path(current_user, :card_template_id => template.id), class: 'btn' %>
-							<% else %>
-								<%= link_to "Personalize", card_templates_show_path(id: template.id) %>
-							<% end %>
-							
-					</li>
+		<h1>Popular Cards</h1>
+	<ul id="profile_MyCards" class="blocks-4">
+		<% @card_templates.each do |template| %>
+			<li>
+				<%= "<img class='templateThumb' style='width:100%' src='/card_templates/#{template.thumb_path}'>".html_safe %>
+				<h4><%= template.name %></h4>
+				<p><%= print_price(template.price) %></p>
+				<% if current_user %>
+				<%= link_to "Personalize", new_user_card_path(current_user, :card_template_id => template.id), class: 'btn' %>
+				<% else %>
+					<%= link_to "Personalize", login_to_personalize_path, method: :post, class: 'btn' %>
 				<% end %>
-				</ul>			
-		<!-- <ul class="bxslider">
-		  <li><img style="width:300px" src='/card_templates/birthday-1-thumb.png' /></li>
-		  <li><img style="width:300px" src='/card_templates/birthday-2-thumb.png' /></li>
-		  <li><img style="width:300px" src='/card_templates/birthday-3-thumb.png' /></li>
-		</ul> -->
-
+			</li>
+		<% end %>
+	</ul>
+	<h2 style="text-align:center;"><%= link_to "View All Cards", card_templates_index_path %></h2>
+	</div>
 </div>

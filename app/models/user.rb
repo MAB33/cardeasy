@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :cards, :dependent => :destroy
   has_many :card_templates, through: :cards
   has_many :orders
-  #has_many :cardlings, through: :cards
+  has_many :cardlings, through: :orders
 
   before_save :capitalize_name, :strip_whitespace
 

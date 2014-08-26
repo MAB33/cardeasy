@@ -3,7 +3,14 @@
 		<h1>Cards</h1>
 		<ul id="profile_MyCards" class="blocks-5">
 			<% @card_templates.each do |template| %>
-				<li><%= template.name %>
+				<li>
+					<%= "<img class='templateThumb' src='/card_templates/#{template.thumb_path}'>".html_safe %>
+					<%= template.name %> | <%= print_price(template.price) %><br>
+					<% if current_user %>
+					<%= link_to "Personalize", new_user_card_path(current_user, :card_template_id => template.id), class: 'btn' %>
+					<% else %>
+						<%= link_to "Personalize", login_to_personalize_path, method: :post, class: 'btn' %>
+					<% end %>
 				</li>
 			<% end %>
 		</ul>

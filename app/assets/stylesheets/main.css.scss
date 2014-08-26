@@ -1,12 +1,10 @@
-// $main-font: 'Arial', sans-serif;
 // $green: #4EA68D;
-$green: #478DB2;
+$blue: #478DB2;
 $red: #AD1920;
 
 @font-face {
    font-family: 'SofiaProLight';
     src: url('/fonts/SofiaProLight.otf');
-
 }
 
 /****************** GENERAL *****************/
@@ -17,8 +15,24 @@ html, body {
 	background-attachment: fixed;
 	background-color:rgba(0,0,0,0);
 }
+html {
+	position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 100px; /* bottom = footer height */
+}
+footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+}
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Muli', Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
 }
 h1 {
 	font-size: 30px;
@@ -33,6 +47,9 @@ h2 {
 // }
 a {
 	text-decoration:none;
+}
+p {
+	margin:0;
 }
 .units-container {
 	padding: 30px;
@@ -52,12 +69,12 @@ a {
 	padding-top:90px;
 }
 button, input[type="submit"], .btn {
-	background-color: $green;
+	background-color: $blue;
 	margin:5px 1px;
 	color:white;
 }
 button:hover, input[type="submit"]:hover, .btn:hover {
-	background-color: $green;
+	background-color: $blue;
 	opacity:.7;
 	color:white;
 }
@@ -74,7 +91,7 @@ i {
 nav {
 	// padding:10px;
 	z-index:999;
-	background-color: $green;
+	background-color: $blue;
 	width: 100%;
 	text-align: center;
 	overflow: auto;
@@ -116,7 +133,7 @@ nav {
 /****************** HOME *******************/
 #welcome {
 		padding-top: 100px;
-		background-color: $green;
+		background-color: $blue;
 		text-align:center;
 	h1 {
 		font-family: 'Pacifico', sans-serif;
@@ -168,6 +185,7 @@ input[type="email"], input[type="password"], input[type="text"], textarea {
 }
 #profile_MyCards {
 	text-align:center;
+	margin-bottom:0;
 	.unindentedList {
 		list-style-type: none;
 	    list-style-position:inside;
@@ -178,6 +196,10 @@ input[type="email"], input[type="password"], input[type="text"], textarea {
 	h2 {
 		padding-bottom:10px;
 	}
+}
+#cardWrapper, #accountWrapper, #addressWrapper, #orderWrapper {
+	background-color:white;
+	padding:10px 12px;
 }
 /********************************************/
 
@@ -197,7 +219,7 @@ input[type="email"], input[type="password"], input[type="text"], textarea {
 
 
 /************* FLASH MESSAGES ***************/
-.flashMessages {
+#error_explanation, .flashMessages {
 	background-color:white;
 	overflow:auto;
 	padding: 3px 10px 0px 10px;
@@ -212,9 +234,18 @@ input[type="email"], input[type="password"], input[type="text"], textarea {
 	float: right;
 }
 #flashNotice h5 {
-	color: $green;
+	color: $blue;
 }
 #flashAlert h5 {
-	color: $red;
+	color: red;
 }
 /********************************************/
+
+
+/************* FOOTER ***************/
+footer {
+	padding:20px;
+	background-color: #EBEBEB;
+}
+/********************************************/
+

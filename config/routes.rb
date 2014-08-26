@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   	resources :addresses
   	resources :cards
   	resources :orders
+    resources :cardlings
   end
 
   get 'home' => 'home#index'
@@ -33,5 +34,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'profile' => 'profile#show'
+
+  post 'login_to_personalize' => 'card_templates#login_to_personalize'
 
 end

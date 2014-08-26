@@ -11,14 +11,14 @@
 	</div>
 <%= form_for [@user, @card], url: user_cards_path do |f| %>
 	<!-- <h4>Card</h4> -->
-
+<%= hidden_field_tag :card_template_id, params[:card_template_id] %>
 <div class="units-row">
-	<div class="unit-35">
+	<div class="unit-30">
 	<%= "<img class='templateThumb' src='/card_templates/#{@card_templates.find_by(id: params[:card_template_id]).thumb_path}'><br>".html_safe %>
 	<%= f.hidden_field :card_template_id, :value => @card_templates.find_by(id: params[:card_template_id]).id %>
 	</div>
 
-	<div class="unit-65">
+	<div class="unit-70">
 	<h4><%= f.label "Give this Card a name" %></h4>
 	<%= f.text_field :name %>
 	<h4>Add Your Message (300 word limit)</h4>
