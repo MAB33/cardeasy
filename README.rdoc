@@ -1,28 +1,5 @@
-== README
+Wouldn't it be great if you could set up an entire year's worth of birthday cards at once, and have them mailed out for you, automatically, right on time for your friends' and family members' birthdays?
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Of course! And that's where cardseasy comes in. It's simple, it's quick, and of course, it's easy.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Once signed up, simply pick a card, personalize a message, choose to send it to one, or many, of your saved contacts and we handle the rest. We'll make sure that when a recipient’s birthday is coming up, their card is mailed out to reach them by their birthday.

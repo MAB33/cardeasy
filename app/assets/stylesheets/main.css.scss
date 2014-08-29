@@ -1,5 +1,5 @@
 // $green: #4EA68D;
-$blue: #478DB2;
+$blue: #3983B6;
 $red: #AD1920;
 
 @font-face {
@@ -9,19 +9,17 @@ $red: #AD1920;
 
 /****************** GENERAL *****************/
 html, body {
-	// font-family: $main-font;
-	// padding: 0;
 	background-image: url('/images/debut_light.png');
 	background-attachment: fixed;
 	background-color:rgba(0,0,0,0);
 }
-html {
-	position: relative;
-    min-height: 100%;
-}
-body {
-    margin: 0 0 100px; /* bottom = footer height */
-}
+// html {
+// 	position: relative;
+//     min-height: 100%;
+// }
+// body {
+//     margin: 0 0 100px; /* bottom = footer height */
+// }
 footer {
     position: absolute;
     left: 0;
@@ -42,9 +40,6 @@ h2 {
 	margin-bottom: 0;
 	padding-bottom: 0;
 }
-// h4 {
-// 	font-family: "helvetica", arial;
-// }
 a {
 	text-decoration:none;
 }
