@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140823153335) do
+ActiveRecord::Schema.define(version: 20140906152132) do
 
   create_table "addresses", force: true do |t|
     t.string   "lob_id"
@@ -64,17 +64,12 @@ ActiveRecord::Schema.define(version: 20140823153335) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "file"
-    t.string   "setting_id"
     t.integer  "quantity",         limit: 255
-    t.string   "double_sided"
-    t.string   "full_bleed"
     t.integer  "user_id",          limit: 255
     t.integer  "card_template_id"
     t.text     "message"
     t.integer  "order_id"
     t.string   "status"
-    t.decimal  "price",                        precision: 8, scale: 2
   end
 
   create_table "orders", force: true do |t|

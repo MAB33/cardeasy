@@ -1,9 +1,11 @@
-namespace :cardseasy do
+namespace :simplysent do
 	desc "Gathers all cardlings with a delivery_date that matches the current date"
 	task collect_cards: :environment do
 		Lob.api_key = ENV["LOB_TEST_APIKEY"]
 		@lob = Lob()
 
+		# look into moving code to Cardling model
+		# searches db and collects all cardlings with a delivery date that matches the current date 
 		cardlings_array = []
 		cardlings = Cardling.all
 		cardlings.each do |card|
@@ -12,6 +14,7 @@ namespace :cardseasy do
 			end
 		end
 
+		# creates a Lob job for each cardling and sends to Lob
 		cardlings_array.each do |cardling|
 			user_address = cardling.card.user.addresses.find_by(id: cardling.card.user.address_id)
 			@job = @lob.jobs.create(
