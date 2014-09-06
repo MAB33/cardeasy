@@ -11,7 +11,6 @@ class OrdersController < ApplicationController
 	end
 
 	def add_to_cart
-		puts "PARAMS#{params.inspect}"
 		@card = Card.find(params[:card_id])
 		@user = User.find(current_user.id)
 
@@ -50,6 +49,9 @@ class OrdersController < ApplicationController
 		end
 	end
 
+	# calculates the delivery date of a card to be 10 days prior to the saved address's/contact'c birthday
+	# if the card is created with less than ten days to the birthday, sets the deliveray date for the next year
+	# used by cron task to pick up cardlings that need to be sent to Lob
 	def set_delivery_date(date)
    		delivery_date = (date - 10)
    		delivery_date = delivery_date.change(:year => Date.today.year)
@@ -63,6 +65,7 @@ class OrdersController < ApplicationController
 
 	def checkout
 		current_order.cards.each do |card|
+			# create a Cardling for each address/contact associated with the Card
 			card.addresses.each do |address|
 				generate_card_pdf_for_lob(card, address)
 				@cardling = Cardling.create(file: "https://s3.amazonaws.com/card-bucket/User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf", card_id: card.id, order_id: current_order.id, delivery_date: set_delivery_date(address.birthday), status: "queued", address_id: address.id)
@@ -79,6 +82,8 @@ class OrdersController < ApplicationController
 		redirect_to root_path
 	end
 
+	# saves a copy of the cardling PDF to Amazon S3 bucket
+	# path and name are created in generate_card_pdf_for_lob method
 	def save_pdf_to_s3(path, name)
 		AWS.config( :access_key_id => ENV['AWS_ACCESS_KEY_ID'], :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'])
 		s3 = AWS::S3.new
@@ -88,6 +93,8 @@ class OrdersController < ApplicationController
 		puts "********** s3 success! **********"
 	end
 
+	# card and address are taken in at checkout
+	# uses Prawn gem to generate PDF and saves it in my app
 	def generate_card_pdf_for_lob(card, address)
 		name = "User-#{card.user_id}_Order-#{current_order.id}_Address-#{address.id}.pdf"
 		path = "public/users_cards/#{name}"

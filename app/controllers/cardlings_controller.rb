@@ -5,14 +5,14 @@ class CardlingsController < ApplicationController
 
 	def destroy
       if @cardling.delete
-        flash[:notice] = "The card has been canceled."
-        # if ALL cardlings associated with an order have been deleted, the order is also deleted
-        if @cardling.order.cardlings.blank?
+		flash[:notice] = "The card has been canceled."
+		# if ALL cardlings associated with an order have been deleted, the order is also deleted
+		if @cardling.order.cardlings.blank?
 				@cardling.order.delete
 				redirect_to profile_path
-			else
-				redirect_to profile_path
-			end
+		else
+			redirect_to profile_path
+		end
       else
         flash[:alert] = "There was a problem canceling the card."
         redirect_to profile_path

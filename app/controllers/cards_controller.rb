@@ -26,7 +26,6 @@ class CardsController < ApplicationController
 		@card.price = 1.85
 	  	
 	  	if @card.save
-	  		# generate_user_card_for_lob
 			flash[:notice] = "The card has been added to your collection!"
 			redirect_to user_card_path(current_user, @card)
 	    else 
@@ -49,7 +48,6 @@ class CardsController < ApplicationController
 		params[:card][:address_ids] ||= []
 		@card_templates = CardTemplate.all
       if @card.update(card_params)
-      	# generate_user_card_for_lob
         flash[:notice] = "The card has been updated."
         redirect_to user_card_path
       else
